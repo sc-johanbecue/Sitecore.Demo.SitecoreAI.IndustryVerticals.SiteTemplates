@@ -16,13 +16,13 @@ export const Default = (props: MattheyHeaderProps): JSX.Element => {
         <div className="container flex items-center justify-between gap-3 py-3 lg:gap-5">
           <div className="flex-[1_1]">
             <Placeholder
-              name={`custom-header-logo-${DynamicPlaceholderId}`}
+              name={`matthey-header-logo-${DynamicPlaceholderId}`}
               rendering={props.rendering}
             />
           </div>
           <div className="flex flex-[1_1] justify-end">
             <Placeholder
-              name={`custom-header-icons-${DynamicPlaceholderId}`}
+              name={`matthey-header-icons-${DynamicPlaceholderId}`}
               rendering={props.rendering}
             />
           </div>
@@ -32,7 +32,7 @@ export const Default = (props: MattheyHeaderProps): JSX.Element => {
       {/* Navigation Bar */}
       <div className="flex-[1_1]">
         <Placeholder
-          name={`custom-header-nav-${DynamicPlaceholderId}`}
+          name={`matthey-header-nav-${DynamicPlaceholderId}`}
           rendering={props.rendering}
         />
       </div>

@@ -21,7 +21,7 @@ import ProductCarousel from 'src/components/non-sitecore/ProductCarousel';
 import { CommonStyles, LayoutStyles, PromoFlags, HeroBannerStyles } from '@/types/styleFlags';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation, A11y, Keyboard } from 'swiper/modules';
-import { ArrowRight, ChevronLeft, ChevronRight, ChevronDown, Heart, Plus, Star, User, X, Check, Loader2, LoaderCircle, ShoppingCart, Search, ArrowLeft, Phone, Globe, MoreHorizontal, Home } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, ChevronDown, Heart, Plus, Star, User, X, Check, Loader2, LoaderCircle, ShoppingCart, Search, Play, Download, Phone, ArrowLeft, Globe, MoreHorizontal, Home } from 'lucide-react';
 import Link_a258c208ba01265ca0aa9c7abae745cc7141aa63 from 'next/link';
 import { cn } from '@/shadcn/lib/utils';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -79,6 +79,9 @@ import { useClickAway } from '@/hooks/useClickAway';
 import { useStopResponsiveTransition } from '@/hooks/useStopResponsiveTransition';
 import { extractMediaUrl } from '@/helpers/extractMediaUrl';
 import { getLinkContent, getLinkField, isNavLevel, isNavRootItem, prepareFields } from '@/helpers/navHelpers';
+import { GraphQLRequestClient } from '@sitecore-content-sdk/nextjs/client';
+import scConfig from 'sitecore.config';
+import useEmblaCarousel from 'embla-carousel-react';
 import { useRouter as useRouter_0e8a928699f624a3ad05eb9c9906b0e7ce1a00be } from 'next/router';
 import { Select as Select_4a7098778d43a9b4dcd5871ec48ea51b5a246850, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'src/shadcn/components/ui/select';
 import { localeOptions } from '@/constants/localeOptions';
@@ -87,7 +90,6 @@ import client from 'lib/sitecore-client';
 import * as FEAAS from '@sitecore-feaas/clientside/react';
 import nextConfig from 'next.config';
 import { pageView } from '@sitecore-cloudsdk/events/browser';
-import config from 'sitecore.config';
 import { faUser, faCalendar, faTag } from '@fortawesome/free-solid-svg-icons';
 import { sortByDateDesc, getCategoryCounts } from '@/helpers/articleUtils';
 
@@ -218,8 +220,10 @@ const importMap = [
       { name: 'LoaderCircle', value: LoaderCircle },
       { name: 'ShoppingCart', value: ShoppingCart },
       { name: 'Search', value: Search },
-      { name: 'ArrowLeft', value: ArrowLeft },
+      { name: 'Play', value: Play },
+      { name: 'Download', value: Download },
       { name: 'Phone', value: Phone },
+      { name: 'ArrowLeft', value: ArrowLeft },
       { name: 'Globe', value: Globe },
       { name: 'MoreHorizontal', value: MoreHorizontal },
       { name: 'Home', value: Home },
@@ -613,6 +617,24 @@ const importMap = [
     ]
   },
   {
+    module: '@sitecore-content-sdk/nextjs/client',
+    exports: [
+      { name: 'GraphQLRequestClient', value: GraphQLRequestClient },
+    ]
+  },
+  {
+    module: 'sitecore.config',
+    exports: [
+      { name: 'default', value: scConfig },
+    ]
+  },
+  {
+    module: 'embla-carousel-react',
+    exports: [
+      { name: 'default', value: useEmblaCarousel },
+    ]
+  },
+  {
     module: 'next/router',
     exports: [
       { name: 'useRouter', value: useRouter_0e8a928699f624a3ad05eb9c9906b0e7ce1a00be },
@@ -662,12 +684,6 @@ const importMap = [
     module: '@sitecore-cloudsdk/events/browser',
     exports: [
       { name: 'pageView', value: pageView },
-    ]
-  },
-  {
-    module: 'sitecore.config',
-    exports: [
-      { name: 'default', value: config },
     ]
   },
   {

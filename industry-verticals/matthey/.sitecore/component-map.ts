@@ -38,9 +38,29 @@ import * as ArticleHorizontalCard from 'src/components/non-sitecore/search/Artic
 import * as ArticleCard from 'src/components/non-sitecore/search/ArticleCard';
 import * as NavigationIcons from 'src/components/navigation-icons/NavigationIcons';
 import * as Navigation from 'src/components/navigation/Navigation';
-import * as MattheyHeaderNavigation from 'src/components/matthey/custom-header/MattheyHeaderNavigation';
-import * as MattheyHeaderIcons from 'src/components/matthey/custom-header/MattheyHeaderIcons';
+import * as MattheyVideoSection from 'src/components/matthey/custom-header/MattheyVideoSection';
+import * as MattheyTextWithImageSection from 'src/components/matthey/custom-header/MattheyTextWithImageSection';
+import * as MattheyStatsSection from 'src/components/matthey/custom-header/MattheyStatsSection';
+import * as MattheyStatsCard from 'src/components/matthey/custom-header/MattheyStatsCard';
+import * as MattheySocialFollow from 'src/components/matthey/custom-header/MattheySocialFollow';
+import * as MattheySharePriceCard from 'src/components/matthey/custom-header/MattheySharePriceCard';
+import * as MattheyRichTextSection from 'src/components/matthey/custom-header/MattheyRichTextSection';
+import * as MattheyRelatedLinksSection from 'src/components/matthey/custom-header/MattheyRelatedLinksSection';
+import * as MattheyRelatedLinksCard from 'src/components/matthey/custom-header/MattheyRelatedLinksCard';
+import * as MattheyReadMoreSection from 'src/components/matthey/custom-header/MattheyReadMoreSection';
+import * as MattheyReadMoreCard from 'src/components/matthey/custom-header/MattheyReadMoreCard';
+import * as MattheyPageHeroSection from 'src/components/matthey/custom-header/MattheyPageHeroSection';
+import * as MattheyNewsSection from 'src/components/matthey/custom-header/MattheyNewsSection';
+import * as MattheyNewsDetail from 'src/components/matthey/custom-header/MattheyNewsDetail';
+import * as MattheyNewsCard from 'src/components/matthey/custom-header/MattheyNewsCard';
+import * as MattheyNavigationIcons from 'src/components/matthey/custom-header/MattheyNavigationIcons';
+import * as MattheyNavigation from 'src/components/matthey/custom-header/MattheyNavigation';
+import * as MattheyLogo from 'src/components/matthey/custom-header/MattheyLogo';
+import * as MattheyHeroCarouselSection from 'src/components/matthey/custom-header/MattheyHeroCarouselSection';
+import * as MattheyHeroCarouselCard from 'src/components/matthey/custom-header/MattheyHeroCarouselCard';
 import * as MattheyHeader from 'src/components/matthey/custom-header/MattheyHeader';
+import * as MattheyFooter from 'src/components/matthey/custom-header/MattheyFooter';
+import * as MattheyContentSection from 'src/components/matthey/custom-header/MattheyContentSection';
 import * as LinkList from 'src/components/link-list/LinkList';
 import * as LanguageSwitcher from 'src/components/language-switcher/LanguageSwitcher';
 import * as Image from 'src/components/image/Image';
@@ -95,9 +115,29 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ArticleCard', { ...ArticleCard }],
   ['NavigationIcons', { ...NavigationIcons }],
   ['Navigation', { ...Navigation, componentType: 'client' }],
-  ['MattheyHeaderNavigation', { ...MattheyHeaderNavigation, componentType: 'client' }],
-  ['MattheyHeaderIcons', { ...MattheyHeaderIcons }],
+  ['MattheyVideoSection', { ...MattheyVideoSection, componentType: 'client' }],
+  ['MattheyTextWithImageSection', { ...MattheyTextWithImageSection, componentType: 'client' }],
+  ['MattheyStatsSection', { ...MattheyStatsSection, componentType: 'client' }],
+  ['MattheyStatsCard', { ...MattheyStatsCard, componentType: 'client' }],
+  ['MattheySocialFollow', { ...MattheySocialFollow }],
+  ['MattheySharePriceCard', { ...MattheySharePriceCard, componentType: 'client' }],
+  ['MattheyRichTextSection', { ...MattheyRichTextSection, componentType: 'client' }],
+  ['MattheyRelatedLinksSection', { ...MattheyRelatedLinksSection, componentType: 'client' }],
+  ['MattheyRelatedLinksCard', { ...MattheyRelatedLinksCard, componentType: 'client' }],
+  ['MattheyReadMoreSection', { ...MattheyReadMoreSection, componentType: 'client' }],
+  ['MattheyReadMoreCard', { ...MattheyReadMoreCard, componentType: 'client' }],
+  ['MattheyPageHeroSection', { ...MattheyPageHeroSection }],
+  ['MattheyNewsSection', { ...MattheyNewsSection, componentType: 'client' }],
+  ['MattheyNewsDetail', { ...MattheyNewsDetail }],
+  ['MattheyNewsCard', { ...MattheyNewsCard }],
+  ['MattheyNavigationIcons', { ...MattheyNavigationIcons }],
+  ['MattheyNavigation', { ...MattheyNavigation, componentType: 'client' }],
+  ['MattheyLogo', { ...MattheyLogo }],
+  ['MattheyHeroCarouselSection', { ...MattheyHeroCarouselSection, componentType: 'client' }],
+  ['MattheyHeroCarouselCard', { ...MattheyHeroCarouselCard, componentType: 'client' }],
   ['MattheyHeader', { ...MattheyHeader }],
+  ['MattheyFooter', { ...MattheyFooter, componentType: 'client' }],
+  ['MattheyContentSection', { ...MattheyContentSection }],
   ['LinkList', { ...LinkList }],
   ['LanguageSwitcher', { ...LanguageSwitcher, componentType: 'client' }],
   ['Image', { ...Image }],
