@@ -117,7 +117,9 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
           </Link>
           {hasMobileSubmenu && <ChevronRight className="size-5 text-white" />}
         </div>
-        {isExpanded && hasChildren && <ul className="flex flex-col bg-[rgb(30,34,170)]/50">{children}</ul>}
+        {isExpanded && hasChildren && (
+          <ul className="flex flex-col bg-[rgb(30,34,170)]/50">{children}</ul>
+        )}
       </li>
     );
   }
@@ -317,7 +319,7 @@ export const Default = ({ params, fields }: MattheyHeaderNavigationProps) => {
         </ul>
       </nav>
 
-{/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay */}
       <nav
         className={clsx(
           'z-100 flex bg-[rgb(30,34,170)] duration-300 lg:hidden',
@@ -353,5 +355,3 @@ export const Default = ({ params, fields }: MattheyHeaderNavigationProps) => {
     </div>
   );
 };
-
-;
