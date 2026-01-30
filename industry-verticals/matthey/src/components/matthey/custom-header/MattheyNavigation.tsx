@@ -87,7 +87,7 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
   if (isMobile && isExpanded && hasChildren) {
     return (
       <li className="flex flex-col">
-        <div className="flex items-center gap-2 px-4 py-3 text-sm text-blue-300">
+        <div className="flex items-center gap-2 px-4 py-3 text-sm text-white/70">
           <button
             onClick={() => setIsExpanded(false)}
             className="flex items-center justify-center"
@@ -97,7 +97,7 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
           </button>
           <span>{getLinkContent(fields, logoSrc)}</span>
         </div>
-        <ul className="flex flex-col border-t border-blue-400/20">{children}</ul>
+        <ul className="flex flex-col border-t border-white/20">{children}</ul>
       </li>
     );
   }
@@ -105,19 +105,19 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
   // Mobile menu item
   if (isMobile) {
     return (
-      <li className="border-b border-blue-400/20">
+      <li className="border-b border-white/20">
         <div className="flex items-center justify-between px-4 py-4">
           <Link
             field={getLinkField(fields)}
             editable={page.mode.isEditing}
             onClick={clickHandler}
-            className="font-medium text-white transition-colors hover:text-blue-200"
+            className="font-medium text-white transition-colors hover:text-white/80"
           >
             {getLinkContent(fields, logoSrc)}
           </Link>
           {hasMobileSubmenu && <ChevronRight className="size-5 text-white" />}
         </div>
-        {isExpanded && hasChildren && <ul className="flex flex-col bg-blue-900/50">{children}</ul>}
+        {isExpanded && hasChildren && <ul className="flex flex-col bg-[rgb(30,34,170)]/50">{children}</ul>}
       </li>
     );
   }
@@ -141,9 +141,9 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
           editable={page.mode.isEditing}
           onClick={clickHandler}
           className={clsx(
-            'whitespace-nowrap transition-colors hover:text-blue-200',
+            'whitespace-nowrap transition-colors hover:text-white/80',
             isTopLevelPage && 'font-medium text-white',
-            isActive && isTopLevelPage && 'text-blue-200'
+            isActive && isTopLevelPage && 'text-white/80'
           )}
         >
           {getLinkContent(fields, logoSrc)}
@@ -196,7 +196,7 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
                     field={getLinkField(child)}
                     editable={page.mode.isEditing}
                     onClick={clickHandler}
-                    className="mb-2 text-sm font-semibold text-gray-800 transition-colors hover:text-blue-600"
+                    className="mb-2 text-sm font-semibold text-gray-800 transition-colors hover:text-[rgb(30,34,170)]"
                   >
                     {getLinkContent(child, logoSrc)}
                   </Link>
@@ -208,7 +208,7 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
                             field={getLinkField(grandchild)}
                             editable={page.mode.isEditing}
                             onClick={clickHandler}
-                            className="text-sm text-gray-600 transition-colors hover:text-blue-600"
+                            className="text-sm text-gray-600 transition-colors hover:text-[rgb(30,34,170)]"
                           >
                             {getLinkContent(grandchild, logoSrc)}
                           </Link>
@@ -308,7 +308,7 @@ export const Default = ({ params, fields }: MattheyHeaderNavigationProps) => {
       </div>
 
       {/* Desktop Navigation Bar */}
-      <nav className="hidden bg-blue-900 lg:block">
+      <nav className="hidden bg-[rgb(30,34,170)] lg:block">
         <ul
           role="menubar"
           className="container flex flex-col items-center justify-center gap-x-8 gap-y-4 py-4 text-lg lg:flex-row xl:gap-x-16"
@@ -317,10 +317,10 @@ export const Default = ({ params, fields }: MattheyHeaderNavigationProps) => {
         </ul>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+{/* Mobile Menu Overlay */}
       <nav
         className={clsx(
-          'z-100 flex bg-blue-900 duration-300 lg:hidden',
+          'z-100 flex bg-[rgb(30,34,170)] duration-300 lg:hidden',
           'fixed inset-0 flex-col',
           !isMenuOpen && '-translate-y-full opacity-0'
         )}
@@ -331,14 +331,14 @@ export const Default = ({ params, fields }: MattheyHeaderNavigationProps) => {
             <Link
               field={getLinkField(rootItem!)}
               editable={page.mode.isEditing}
-              className="text-xl font-bold text-blue-900"
+              className="text-xl font-bold text-[rgb(30,34,170)]"
             >
               {getLinkContent(rootItem!, logoSrc)}
             </Link>
           )}
           <button
             onClick={() => handleToggleMenu(undefined, false)}
-            className="p-2 text-blue-900"
+            className="p-2 text-[rgb(30,34,170)]"
             aria-label="Close menu"
           >
             <X className="size-6" />
@@ -353,3 +353,5 @@ export const Default = ({ params, fields }: MattheyHeaderNavigationProps) => {
     </div>
   );
 };
+
+;
