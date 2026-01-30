@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-const TICKER = "JMAT.L"; // Johnson Matthey on Yahoo Finance :contentReference[oaicite:2]{index=2}
+const TICKER = 'JMAT.L'; // Johnson Matthey on Yahoo Finance :contentReference[oaicite:2]{index=2}
 
 type ApiResp = {
   symbol: string;
@@ -12,8 +12,11 @@ type ApiResp = {
   marketTimeISO: string;
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<ApiResp | { error: string }>) {
-  if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<ApiResp | { error: string }>
+) {
+  if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
     const url = `https://query1.finance.yahoo.com/v8/finance/chart/${TICKER}?interval=1d&range=2d`; // endpoint used by many clients :contentReference[oaicite:3]{index=3}
@@ -21,8 +24,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const r = await fetch(url, {
       headers: {
         // Helps avoid some basic bot blocks
-        "User-Agent": "Mozilla/5.0",
-        "Accept": "application/json",
+        'User-Agent': 'Mozilla/5.0',
+        Accept: 'application/json',
       },
     });
 
@@ -33,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const data = await r.json();
 
     const result = data?.chart?.result?.[0];
-    if (!result) return res.status(502).json({ error: "Malformed upstream response" });
+    if (!result) return res.status(502).json({ error: 'Malformed upstream response' });
 
     const meta = result.meta;
     const price = Number(meta?.regularMarketPrice ?? 0);
@@ -43,11 +46,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const changePercent = prev ? (change / prev) * 100 : 0;
 
     // Cache at the edge / CDN for 60s (tune as you like)
-    res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=300");
+    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
 
     return res.status(200).json({
       symbol: meta?.symbol ?? TICKER,
-      currency: meta?.currency ?? "GBX",
+      currency: meta?.currency ?? 'GBX',
       regularMarketPrice: price,
       previousClose: prev,
       change: Number(change.toFixed(4)),
@@ -57,6 +60,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         : new Date().toISOString(),
     });
   } catch (e: any) {
-    return res.status(500).json({ error: e?.message ?? "Unknown error" });
+    return res.status(500).json({ error: e?.message ?? 'Unknown error' });
   }
 }

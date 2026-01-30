@@ -88,26 +88,26 @@ const DEFAULT_FIELDS: Fields = {
 };
 
 const HeroSlide = ({ slide }: { slide: HeroSlideCard }) => (
-  <div className="relative h-[500px] md:h-[550px] lg:h-[500px] w-full">
+  <div className="relative h-[500px] w-full md:h-[550px] lg:h-[500px]">
     <JssImage
       field={slide.fields.BackgroundImage}
-      className="absolute inset-0 w-full h-full object-cover z-[1] pointer-events-auto"
+      className="pointer-events-auto absolute inset-0 z-[1] h-full w-full object-cover"
     />
-    <div className="absolute inset-0 bg-black/30 pointer-events-none z-[2]" />
-    <div className="relative h-full container mx-auto px-4 flex flex-col justify-center z-[3] pointer-events-none">
-      <div className="max-w-xl pointer-events-auto">
-        <p className="text-white text-sm md:text-base mb-2 md:mb-4">
+    <div className="pointer-events-none absolute inset-0 z-[2] bg-black/30" />
+    <div className="pointer-events-none relative z-[3] container mx-auto flex h-full flex-col justify-center px-4">
+      <div className="pointer-events-auto max-w-xl">
+        <p className="mb-2 text-sm text-white md:mb-4 md:text-base">
           <Text field={slide.fields.Eyebrow} />
         </p>
-        <h1 className="text-white text-2xl md:text-4xl lg:text-5xl font-light leading-tight mb-6 md:mb-8 text-balance">
+        <h1 className="mb-6 text-2xl leading-tight font-light text-balance text-white md:mb-8 md:text-4xl lg:text-5xl">
           <Text field={slide.fields.Title} />
         </h1>
         <JssLink
           field={slide.fields.ButtonLink}
-          className="inline-flex items-center gap-2 bg-[#1e22aa] text-white px-6 py-3 text-sm font-semibold hover:bg-[#1e22aa]/90 transition-colors"
+          className="inline-flex items-center gap-2 bg-[#1e22aa] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1e22aa]/90"
         >
           <Text field={slide.fields.ButtonText} />
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="h-4 w-4" />
         </JssLink>
       </div>
     </div>
@@ -164,7 +164,7 @@ export const Default = (props: ComponentProps): JSX.Element => {
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {fields.Slides?.map((slide, index) => (
-            <div key={index} className="flex-[0_0_100%] min-w-0">
+            <div key={index} className="min-w-0 flex-[0_0_100%]">
               <HeroSlide slide={slide} />
             </div>
           ))}
@@ -174,26 +174,26 @@ export const Default = (props: ComponentProps): JSX.Element => {
       {/* Navigation Arrows */}
       <button
         onClick={scrollPrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-white/80 transition-colors z-10"
+        className="absolute top-1/2 left-4 z-10 -translate-y-1/2 text-white transition-colors hover:text-white/80"
         aria-label="Previous slide"
       >
-        <ChevronLeft className="w-8 h-8 md:w-10 md:h-10" />
+        <ChevronLeft className="h-8 w-8 md:h-10 md:w-10" />
       </button>
       <button
         onClick={scrollNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-white/80 transition-colors z-10"
+        className="absolute top-1/2 right-4 z-10 -translate-y-1/2 text-white transition-colors hover:text-white/80"
         aria-label="Next slide"
       >
-        <ChevronRight className="w-8 h-8 md:w-10 md:h-10" />
+        <ChevronRight className="h-8 w-8 md:h-10 md:w-10" />
       </button>
 
       {/* Dots */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+      <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2">
         {fields.Slides?.map((_, index) => (
           <button
             key={index}
             onClick={() => scrollTo(index)}
-            className={`w-3 h-3 rounded-full transition-colors ${
+            className={`h-3 w-3 rounded-full transition-colors ${
               index === selectedIndex
                 ? 'bg-white/40 ring-2 ring-white'
                 : 'bg-white hover:bg-white/80'

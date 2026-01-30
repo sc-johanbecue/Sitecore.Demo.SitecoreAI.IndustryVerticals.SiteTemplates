@@ -1,6 +1,5 @@
 import React, { JSX } from 'react';
 import { ArrowRight, Download } from 'lucide-react';
-import Link from 'next/link';
 import {
   TextField,
   ImageField,
