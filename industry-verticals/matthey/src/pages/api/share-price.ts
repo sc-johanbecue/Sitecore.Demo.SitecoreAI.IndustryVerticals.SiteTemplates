@@ -1,3 +1,5 @@
+// eslint-disable @typescript-eslint/no-explicit-any
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 const TICKER = 'JMAT.L'; // Johnson Matthey on Yahoo Finance :contentReference[oaicite:2]{index=2}
@@ -59,6 +61,7 @@ export default async function handler(
         ? new Date(meta.regularMarketTime * 1000).toISOString()
         : new Date().toISOString(),
     });
+  
   } catch (e: any) {
     return res.status(500).json({ error: e?.message ?? 'Unknown error' });
   }

@@ -1,12 +1,7 @@
 'use client';
 
 import React, { JSX } from 'react';
-import {
-  TextField,
-  Text,
-  ComponentParams,
-  ComponentRendering,
-} from '@sitecore-content-sdk/nextjs';
+import { TextField, Text, ComponentParams, ComponentRendering } from '@sitecore-content-sdk/nextjs';
 
 type Fields = {
   StatValue: TextField;
@@ -33,10 +28,10 @@ export const Default = (props: ComponentProps): JSX.Element => {
 
   return (
     <div className="p-6 md:p-8" key={id}>
-      <p className="text-2xl md:text-3xl font-bold text-white mb-2">
+      <p className="mb-2 text-2xl font-bold text-white md:text-3xl">
         <Text field={fields.StatValue} />
       </p>
-      <p className="text-sm md:text-base text-white/90 leading-relaxed">
+      <p className="text-sm leading-relaxed text-white/90 md:text-base">
         <Text field={fields.Description} />
       </p>
     </div>

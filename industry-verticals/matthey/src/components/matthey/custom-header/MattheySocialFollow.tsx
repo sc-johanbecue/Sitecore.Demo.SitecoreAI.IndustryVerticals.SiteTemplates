@@ -1,11 +1,7 @@
 import React from 'react';
 import { LinkField, Link as ContentSdkLink, Field, Text } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
-import {
-  InstagramIcon,
-  LinkedinIcon,
-  YoutubeIcon,
-} from '@/assets/icons/social/social';
+import { InstagramIcon, LinkedinIcon, YoutubeIcon } from '@/assets/icons/social/social';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebookF,
