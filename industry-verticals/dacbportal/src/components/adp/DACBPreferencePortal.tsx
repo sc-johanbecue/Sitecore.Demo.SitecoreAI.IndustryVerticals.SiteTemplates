@@ -7,7 +7,6 @@ import {
   RichText,
   RichTextField,
   LinkField,
-  Link as SitecoreLink,
   useSitecore,
 } from '@sitecore-content-sdk/nextjs';
 import { Check, User, Bell, FileText, Calendar, Settings, Shield, ChevronDown } from 'lucide-react';
@@ -480,30 +479,15 @@ export const Default = (props: DACBPreferencePortalProps): JSX.Element | null =>
               >
                 Update My Profile
               </button>
-              {fields.CTALink?.value?.href ? (
-                <SitecoreLink
-                  field={fields.CTALink}
-                  className="inline-flex items-center justify-center rounded-full bg-[#AF3448] px-6 py-2.5 font-medium text-white transition-colors hover:bg-[#972c3e]"
-                >
-                  <Text field={fields.CTAText} />
-                </SitecoreLink>
-              ) : (
-                <button
-                  type="button"
-                  className="rounded-full bg-[#AF3448] px-6 py-2.5 font-medium text-white transition-colors hover:bg-[#972c3e]"
-                >
-                  <Text field={fields.CTAText} />
-                </button>
-              )}
               <button
                 type="button"
                 onClick={handleSave}
                 disabled={isSaving}
-                className={`bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2 rounded-full px-6 py-2.5 font-medium transition-all ${
+                className={`inline-flex items-center justify-center rounded-full bg-[#AF3448] px-6 py-2.5 font-medium text-white transition-colors hover:bg-[#972c3e] ${
                   isSaving ? 'cursor-not-allowed opacity-70' : ''
                 }`}
               >
-                {isSaving ? 'Saving...' : <Text field={fields.SaveButtonText} />}
+                {isSaving ? 'Saving...' : <Text field={fields.CTAText} />}
               </button>
             </div>
           </div>
