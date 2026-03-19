@@ -346,7 +346,7 @@ export const Default = (props: DACBPreferencePortalProps): JSX.Element | null =>
     await new Promise((resolve) => setTimeout(resolve, 800));
     setIsSaving(false);
     setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 2500);
+    setTimeout(() => setShowSuccess(false), 4000);
   };
 
   if (!isEditingOrPreview && isSecured) {
@@ -493,13 +493,19 @@ export const Default = (props: DACBPreferencePortalProps): JSX.Element | null =>
           </div>
 
           {showSuccess && (
-            <div className="animate-in slide-in-from-bottom-2 fixed right-6 bottom-6 flex items-center gap-2 rounded-lg bg-green-600 px-6 py-3 text-white shadow-lg">
-              <Check className="h-5 w-5" />
-              {fields.SaveSuccessMessage?.value ? (
-                <Text field={fields.SaveSuccessMessage} />
-              ) : (
-                <span>Preferences saved successfully</span>
-              )}
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+              <div className="animate-in zoom-in-95 flex flex-col items-center gap-3 rounded-2xl bg-white px-10 py-8 shadow-2xl">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
+                  <Check className="h-7 w-7 text-green-600" />
+                </div>
+                <p className="text-lg font-semibold text-gray-900">
+                  {fields.SaveSuccessMessage?.value ? (
+                    <Text field={fields.SaveSuccessMessage} />
+                  ) : (
+                    'Preferences saved successfully'
+                  )}
+                </p>
+              </div>
             </div>
           )}
         </div>
