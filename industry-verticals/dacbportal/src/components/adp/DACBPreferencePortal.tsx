@@ -11,6 +11,7 @@ import {
   useSitecore,
 } from '@sitecore-content-sdk/nextjs';
 import { Check, User, Bell, FileText, Calendar, Settings, Shield, ChevronDown } from 'lucide-react';
+import { event } from '@sitecore-cloudsdk/events/browser';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { ComponentProps } from '@/lib/component-props';
 import {
@@ -326,6 +327,23 @@ export const Default = (props: DACBPreferencePortalProps): JSX.Element | null =>
 
   const handleSave = async () => {
     setIsSaving(true);
+
+    // Fire CDP preference update event
+    event({
+      type: 'dacb:PREFERENCE_UPDATE',
+      channel: 'WEB',
+      language: 'EN',
+      page: window.location.pathname,
+      extensionData: {
+        industries: preferences.industries.join(','),
+        topics: preferences.topics.join(','),
+        eventTypes: preferences.eventTypes.join(','),
+        contentTypes: preferences.contentTypes.join(','),
+        communicationFrequency: preferences.communicationFrequency,
+        gdprConsent: preferences.gdprConsent,
+      },
+    }).catch((e: unknown) => console.debug('Preference event failed:', e));
+
     await new Promise((resolve) => setTimeout(resolve, 800));
     setIsSaving(false);
     setShowSuccess(true);
