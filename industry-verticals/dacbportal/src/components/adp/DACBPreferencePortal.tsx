@@ -495,7 +495,11 @@ export const Default = (props: DACBPreferencePortalProps): JSX.Element | null =>
           {showSuccess && (
             <div className="animate-in slide-in-from-bottom-2 fixed right-6 bottom-6 flex items-center gap-2 rounded-lg bg-green-600 px-6 py-3 text-white shadow-lg">
               <Check className="h-5 w-5" />
-              <Text field={fields.SaveSuccessMessage} />
+              {fields.SaveSuccessMessage?.value ? (
+                <Text field={fields.SaveSuccessMessage} />
+              ) : (
+                <span>Preferences saved successfully</span>
+              )}
             </div>
           )}
         </div>
