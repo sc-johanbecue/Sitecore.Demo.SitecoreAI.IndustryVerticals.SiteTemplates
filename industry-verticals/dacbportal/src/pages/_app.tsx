@@ -2,6 +2,7 @@ import { JSX } from 'react'; //, useEffect
 import type { AppProps } from 'next/app';
 import { I18nProvider } from 'next-localization';
 import Bootstrap from 'src/Bootstrap';
+import CdpIdentityOnLogin from 'src/components/adp/CdpIdentityOnLogin';
 import { SitecorePageProps } from '@sitecore-content-sdk/nextjs';
 import scConfig from 'sitecore.config';
 import 'assets/main.css';
@@ -37,6 +38,7 @@ function App({ Component, pageProps }: AppProps<SitecorePageProps>): JSX.Element
     <>
       <UserProvider>
         <Bootstrap {...pageProps} />
+        <CdpIdentityOnLogin />
         {/*
         // Use the next-localization (w/ rosetta) library to provide our translation dictionary to the app.
         // Note Next.js does not (currently) provide anything for translation, only i18n routing.
