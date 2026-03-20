@@ -10,6 +10,7 @@ import { LinkField } from '@sitecore-content-sdk/nextjs';
 import PreviewSearch from '../non-sitecore/search/PreviewSearch';
 import { PREVIEW_WIDGET_ID } from '@/constants/search';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { event } from '@sitecore-cloudsdk/events/browser';
 import {
   getUserEntitlementsFromUser,
   getUserRolesFromUser,
@@ -116,6 +117,16 @@ const IconDropdown = ({
   </Popover>
 );
 
+/** Fire a CDP LOGOUT event (fire-and-forget; navigation proceeds immediately). */
+function handleLogoutClick() {
+  event({
+    type: 'dacb:LOGOUT',
+    channel: 'WEB',
+    language: 'EN',
+    page: window.location.pathname,
+  }).catch((e: unknown) => console.debug('[CDP] Logout event failed:', e));
+}
+
 export default function AuthButtons() {
   const { user, isLoading } = useUser();
 
@@ -136,7 +147,7 @@ export default function AuthButtons() {
       <UserInfoWithHover user={user} />
       <br />
       {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-      <a href="/api/auth/logout" className="text-[#E2231A] hover:underline">
+      <a href="/api/auth/logout" onClick={handleLogoutClick} className="text-[#E2231A] hover:underline">
         Logout
       </a>
     </div>
@@ -174,7 +185,7 @@ export const Default = (props: NavigationIconsProps): JSX.Element => {
                     <UserInfoWithHover user={user} />
                   </div>
                   {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                  <a href="/api/auth/logout" className="ml-1 text-[#E2231A] hover:underline">
+                  <a href="/api/auth/logout" onClick={handleLogoutClick} className="ml-1 text-[#E2231A] hover:underline">
                     {t('logout') || 'Log out'}
                   </a>
                 </div>
