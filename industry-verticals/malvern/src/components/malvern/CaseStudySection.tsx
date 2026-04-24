@@ -116,13 +116,13 @@ export const Default = (props: CaseStudySectionProps): JSX.Element => {
             <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
               <SitecoreLink
                 field={fields.CTA1Link}
-                className="bg-malvern-green hover:bg-malvern-green-hover inline-flex items-center justify-center rounded px-8 py-3 text-base font-semibold text-white transition-colors"
+                className="bg-malvern-green hover:bg-malvern-green-hover inline-flex items-center justify-center rounded-md px-8 py-3 text-base font-semibold text-white transition-colors"
               >
                 <Text field={fields.CTA1Text} />
               </SitecoreLink>
               <SitecoreLink
                 field={fields.CTA2Link}
-                className="text-primary inline-flex items-center gap-2 text-base font-semibold transition-colors hover:underline"
+                className="text-malvern-link hover:text-malvern-teal inline-flex items-center gap-2 text-base font-semibold transition-colors hover:underline"
               >
                 <Text field={fields.CTA2Text} />
                 <svg

@@ -55,7 +55,7 @@ const defaultFields: Fields = {
   TitleFour: { value: 'Company info' },
   TitleFive: { value: 'Quick links' },
 
-  Logo: { value: { src: '/logos/adp-red.svg', alt: 'ADP' } },
+  Logo: { value: { src: '/logos/adp-red.svg', alt: 'Malvern Panalytical' } },
   CountryLabel: { value: 'United Kingdom' },
   AllLocationsLink: { value: { href: '/worldwide-locations', text: 'All Worldwide Locations' } },
 

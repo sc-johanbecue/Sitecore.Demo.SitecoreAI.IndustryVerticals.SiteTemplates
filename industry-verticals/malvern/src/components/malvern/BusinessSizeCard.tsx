@@ -88,7 +88,7 @@ export const Default = ({ params, fields }: BusinessSizeCardProps) => {
       ));
 
     return (
-      <div className="flex h-full flex-col rounded-lg border border-gray-200 bg-white">
+      <div className="flex h-full flex-col rounded-lg border border-gray-200/80 bg-white shadow-md">
         {/* Image */}
         <div className="flex items-center justify-center px-6 pt-6">
           <SitecoreImage

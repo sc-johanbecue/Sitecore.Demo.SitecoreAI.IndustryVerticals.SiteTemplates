@@ -14,6 +14,7 @@ import {
   useSitecore,
 } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
+import { ArrowRight } from 'lucide-react';
 import {
   getEntitlementOperatorFromField,
   getRequiredAuth0KeysFromEntitlements,
@@ -105,9 +106,9 @@ export const Default = (props: serviceCardProps): JSX.Element | null => {
 
   return (
     <div className={`component service-card w-full ${styles || ''}`} id={id}>
-      <div className="flex h-full flex-col items-center rounded-lg border border-gray-200 bg-white px-6 pt-8 pb-8 text-center shadow-sm lg:px-8 lg:pt-10 lg:pb-10">
+      <div className="flex h-full flex-col items-center rounded-lg border border-gray-200/80 bg-white px-6 pt-8 pb-8 text-center shadow-md lg:px-8 lg:pt-10 lg:pb-10">
         {/* Icon */}
-        <div className="bg-malvern-sky/80 mb-5 flex h-16 w-16 items-center justify-center rounded-full p-2">
+        <div className="bg-malvern-sky mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-[#e0eaef] p-2">
           <SitecoreImage field={fields.Icon} className="h-12 w-12 object-contain" />
         </div>
         {/* Title */}
@@ -130,6 +131,16 @@ export const Default = (props: serviceCardProps): JSX.Element | null => {
         <div className="service-card-description text-sm leading-relaxed text-[#333]">
           <RichText field={fields.Description} />
         </div>
+
+        {fields.Link?.value?.href && fields.LinkText?.value && (
+          <SitecoreLink
+            field={fields.Link}
+            className="text-malvern-link mt-5 inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+          >
+            <Text field={fields.LinkText} />
+            <ArrowRight className="h-4 w-4 shrink-0" />
+          </SitecoreLink>
+        )}
       </div>
 
       <style jsx>{`

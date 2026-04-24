@@ -51,7 +51,7 @@ export const Default = (props: ContentImageSectionProps): JSX.Element => {
 
   return (
     <section
-      className={`component content-image-section bg-background-accent py-12 lg:py-16 ${styles}`}
+      className={`component content-image-section bg-malvern-sky py-12 lg:py-16 ${styles}`}
       id={id}
     >
       <div className="mx-auto max-w-7xl px-4">

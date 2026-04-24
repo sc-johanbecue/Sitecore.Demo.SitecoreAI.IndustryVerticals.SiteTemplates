@@ -56,7 +56,7 @@ export const Default = (props: BusinessSizeSectionProps): JSX.Element => {
 
   return (
     <section
-      className={`component business-size-section bg-[#F7F7F7] py-12 lg:py-16 ${styles || ''}`}
+      className={`component business-size-section bg-malvern-sky py-12 lg:py-16 ${styles || ''}`}
       id={id}
     >
       <div className="mx-auto max-w-7xl px-4">

@@ -80,6 +80,7 @@ import * as CtaBarSection from 'src/components/adp/CtaBarSection';
 import * as ContentImageSection from 'src/components/adp/ContentImageSection';
 import * as ContentBlockSection from 'src/components/adp/ContentBlockSection';
 import * as ContactFormSection from 'src/components/adp/ContactFormSection';
+import * as CdpIdentityOnLogin from 'src/components/adp/CdpIdentityOnLogin';
 import * as CaseStudySection from 'src/components/adp/CaseStudySection';
 import * as BusinessSizeSection from 'src/components/adp/BusinessSizeSection';
 import * as BusinessSizeCard from 'src/components/adp/BusinessSizeCard';
@@ -169,6 +170,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ContentImageSection', { ...ContentImageSection, componentType: 'client' }],
   ['ContentBlockSection', { ...ContentBlockSection, componentType: 'client' }],
   ['ContactFormSection', { ...ContactFormSection, componentType: 'client' }],
+  ['CdpIdentityOnLogin', { ...CdpIdentityOnLogin, componentType: 'client' }],
   ['CaseStudySection', { ...CaseStudySection, componentType: 'client' }],
   ['BusinessSizeSection', { ...BusinessSizeSection, componentType: 'client' }],
   ['BusinessSizeCard', { ...BusinessSizeCard }],

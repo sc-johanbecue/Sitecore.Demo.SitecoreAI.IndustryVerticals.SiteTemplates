@@ -257,7 +257,7 @@ export const Default = (props: TestimonialCarouselSectionProps): JSX.Element => 
                 className={`h-3 w-3 rounded-full border-2 transition-all ${
                   i === activeIndex
                     ? 'border-malvern-green bg-malvern-green'
-                    : 'border-malvern-teal/40 bg-transparent'
+                    : 'border-gray-300 bg-transparent'
                 }`}
                 aria-label={`Go to quote ${i + 1}`}
               />

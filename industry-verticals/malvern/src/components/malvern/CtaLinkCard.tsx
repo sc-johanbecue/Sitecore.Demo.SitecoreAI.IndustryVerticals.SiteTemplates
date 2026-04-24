@@ -45,7 +45,7 @@ export const Default = (props: CtaLinkCardProps): JSX.Element | null => {
   if (!fields.Link?.value?.href) return null;
 
   const baseClasses =
-    'inline-flex max-w-[200px] items-center justify-center rounded-lg px-8 py-4 text-base font-semibold transition-colors';
+    'inline-flex max-w-[280px] items-center justify-center rounded-md px-8 py-3.5 text-base font-semibold transition-colors';
 
   const variantClasses =
     variant === 'secondary'

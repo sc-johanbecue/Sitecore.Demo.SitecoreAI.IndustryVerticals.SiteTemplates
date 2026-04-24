@@ -74,7 +74,7 @@ export const Default = (props: TestimonialCardProps): JSX.Element | null => {
       />
 
       {/* Author */}
-      <p className="text-foreground text-sm">
+      <p className="text-sm text-[#333]">
         <Text tag="span" className="font-extrabold" field={fields.Author} />{' '}
         <Text tag="span" field={fields.Function} /> , <Text tag="span" field={fields.Company} />
       </p>
@@ -83,7 +83,7 @@ export const Default = (props: TestimonialCardProps): JSX.Element | null => {
       {fields.CaseStudyLink?.value?.href && (
         <SitecoreLink
           field={fields.CaseStudyLink}
-          className="text-primary inline-flex items-center gap-2 text-sm font-semibold transition-colors hover:underline"
+          className="text-malvern-link hover:text-malvern-teal mt-3 inline-flex items-center gap-2 text-sm font-semibold transition-colors"
         >
           <Text field={fields.CaseStudyText} />
           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

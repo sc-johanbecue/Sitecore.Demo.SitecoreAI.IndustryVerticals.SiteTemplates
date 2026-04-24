@@ -57,39 +57,37 @@ export const Default = (props: ArticleCardProps): JSX.Element | null => {
       className={`component article-card w-full shrink-0 px-2 md:w-1/2 lg:w-1/3 ${styles || ''}`}
       id={id}
     >
-      <div className="flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-        {/* Image */}
-        <div className="bg-malvern-teal-dark relative aspect-16/8 overflow-hidden">
+      <div className="bg-malvern-teal-dark flex h-full flex-col overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
+        <div className="relative aspect-[16/10] shrink-0 overflow-hidden">
           <SitecoreImage field={fields.Image} className="h-full w-full object-cover" />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#003349]/90 via-transparent to-transparent"
+            aria-hidden="true"
+          />
         </div>
 
-        {/* Content */}
-        <div className="flex grow flex-col p-6 lg:p-8">
-          {/* Tag */}
+        <div className="flex min-h-0 flex-1 flex-col px-5 py-6 text-white lg:px-6 lg:py-8">
           {fields.Tag?.value && (
-            <p className="mb-4 text-xs font-bold tracking-widest text-[#555] uppercase">
+            <p className="mb-3 text-[10px] font-bold tracking-[0.2em] text-white/70 uppercase">
               <Text field={fields.Tag} />
             </p>
           )}
 
-          {/* Title - Plain text */}
-          <h3 className="text-primary mb-auto text-xl leading-snug font-semibold lg:text-2xl">
+          <h3 className="mb-auto text-lg leading-snug font-bold text-white lg:text-xl">
             <Text field={fields.Title} />
           </h3>
 
-          {/* Separator line */}
-          <div className="my-8 border-t border-gray-300" />
-
-          {/* CTA */}
-          {fields.CTALink?.value?.href && (
-            <SitecoreLink
-              field={fields.CTALink}
-              className="text-malvern-green hover:text-malvern-green-hover inline-flex items-center gap-2 text-base font-semibold transition-colors"
-            >
-              <Text field={fields.CTAText} />
-              <ArrowRight className="h-4 w-4" />
-            </SitecoreLink>
-          )}
+          <div className="mt-6 border-t border-white/15 pt-5">
+            {fields.CTALink?.value?.href && (
+              <SitecoreLink
+                field={fields.CTALink}
+                className="bg-malvern-green hover:bg-malvern-green-hover inline-flex w-full items-center justify-center gap-2 rounded-md px-4 py-3 text-sm font-semibold text-white transition-colors lg:w-auto lg:px-6"
+              >
+                <Text field={fields.CTAText} />
+                <ArrowRight className="h-4 w-4 shrink-0" />
+              </SitecoreLink>
+            )}
+          </div>
         </div>
       </div>
     </div>

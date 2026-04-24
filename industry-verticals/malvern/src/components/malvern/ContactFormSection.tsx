@@ -108,7 +108,7 @@ export const Default = (props: ContactFormSectionProps): JSX.Element => {
               value="quote"
               checked={selectedOption === 'quote'}
               onChange={() => setSelectedOption('quote')}
-              className="h-4 w-4 accent-[#28a745]"
+              className="h-4 w-4 accent-[#46af28]"
             />
             <Text field={fields.Option1} />
           </label>
@@ -119,7 +119,7 @@ export const Default = (props: ContactFormSectionProps): JSX.Element => {
               value="demo"
               checked={selectedOption === 'demo'}
               onChange={() => setSelectedOption('demo')}
-              className="h-4 w-4 accent-[#28a745]"
+              className="h-4 w-4 accent-[#46af28]"
             />
             <Text field={fields.Option2} />
           </label>
@@ -130,7 +130,7 @@ export const Default = (props: ContactFormSectionProps): JSX.Element => {
               value="sales"
               checked={selectedOption === 'sales'}
               onChange={() => setSelectedOption('sales')}
-              className="h-4 w-4 accent-[#28a745]"
+              className="h-4 w-4 accent-[#46af28]"
             />
             <Text field={fields.Option3} />
           </label>
@@ -264,7 +264,7 @@ export const Default = (props: ContactFormSectionProps): JSX.Element => {
                   type="radio"
                   name="currentClient"
                   value="yes"
-                  className="h-4 w-4 accent-[#28a745]"
+                  className="h-4 w-4 accent-[#46af28]"
                 />
                 Yes
               </label>
@@ -274,7 +274,7 @@ export const Default = (props: ContactFormSectionProps): JSX.Element => {
                   name="currentClient"
                   value="no"
                   defaultChecked
-                  className="h-4 w-4 accent-[#28a745]"
+                  className="h-4 w-4 accent-[#46af28]"
                 />
                 No
               </label>
@@ -296,7 +296,7 @@ export const Default = (props: ContactFormSectionProps): JSX.Element => {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-malvern-green hover:bg-malvern-green-hover inline-flex w-full items-center justify-center rounded px-10 py-3 text-sm font-semibold text-white transition-colors sm:w-auto"
+              className="bg-malvern-green hover:bg-malvern-green-hover inline-flex w-full items-center justify-center rounded-md px-10 py-3 text-sm font-semibold text-white transition-colors sm:w-auto"
             >
               <Text field={fields.SubmitText} />
             </button>

@@ -81,7 +81,30 @@ export const Default = (props: HeaderSectionProps): JSX.Element => {
       className={`component header-section sticky top-0 z-50 bg-white shadow-sm ${styles || ''}`}
       id={id}
     >
-      <div className="bg-malvern-teal-dark h-1" aria-hidden="true" />
+      {/* Slim utility bar — dark teal, white links (desktop + mobile) */}
+      <div className="bg-malvern-teal-dark text-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-end gap-4 px-4 py-2 text-xs font-medium lg:text-sm">
+          <div className="flex flex-wrap items-center justify-end gap-x-4 gap-y-1">
+            {fields.PhoneLink?.value?.href && (
+              <SitecoreLink
+                field={fields.PhoneLink}
+                className="inline-flex items-center gap-1.5 text-white/90 transition-colors hover:text-white"
+              >
+                <Phone className="hidden h-3.5 w-3.5 sm:inline" />
+                <Text field={fields.PhoneNumber} />
+              </SitecoreLink>
+            )}
+            {fields.FreeQuoteLink?.value?.href && (
+              <SitecoreLink
+                field={fields.FreeQuoteLink}
+                className="bg-malvern-green hover:bg-malvern-green-hover inline-flex items-center rounded-md px-3 py-1.5 text-xs font-semibold text-white transition-colors lg:text-sm"
+              >
+                <Text field={fields.FreeQuoteText} />
+              </SitecoreLink>
+            )}
+          </div>
+        </div>
+      </div>
 
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex h-16 items-center justify-between gap-3 lg:h-20">
@@ -138,35 +161,16 @@ export const Default = (props: HeaderSectionProps): JSX.Element => {
           <div className="flex shrink-0 items-center gap-2 lg:gap-3">
             <button
               type="button"
-              className="text-malvern-teal hover:border-malvern-teal/40 hidden h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-gray-50 transition-colors hover:bg-white lg:inline-flex"
+              className="text-malvern-teal-dark hover:border-malvern-teal/30 hidden h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-[#f0f4f7] transition-colors hover:bg-white lg:inline-flex"
               aria-label="Search"
             >
               <Search className="h-4 w-4 shrink-0" />
             </button>
 
-            {fields.PhoneLink?.value?.href && (
-              <SitecoreLink
-                field={fields.PhoneLink}
-                className="hover:text-malvern-teal hidden items-center gap-2 text-sm font-semibold text-[#333] transition-colors xl:flex"
-              >
-                <Phone className="h-4 w-4" />
-                <Text field={fields.PhoneNumber} />
-              </SitecoreLink>
-            )}
-
-            {fields.FreeQuoteLink?.value?.href && (
-              <SitecoreLink
-                field={fields.FreeQuoteLink}
-                className="border-malvern-teal text-malvern-teal hover:bg-malvern-teal hidden items-center rounded border-2 px-4 py-1.5 text-sm font-semibold transition-colors hover:text-white lg:inline-flex"
-              >
-                <Text field={fields.FreeQuoteText} />
-              </SitecoreLink>
-            )}
-
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-malvern-teal flex h-10 w-10 items-center justify-center lg:hidden"
+              className="text-malvern-teal-dark flex h-10 w-10 items-center justify-center lg:hidden"
               aria-label={
                 isMobileMenuOpen
                   ? (fields.CloseMenuText?.value as string)
@@ -227,18 +231,10 @@ export const Default = (props: HeaderSectionProps): JSX.Element => {
             </div>
 
             <div className="mt-4 flex flex-col gap-3 border-t border-gray-200 pt-4">
-              {fields.FreeQuoteLink?.value?.href && (
-                <SitecoreLink
-                  field={fields.FreeQuoteLink}
-                  className="border-malvern-teal text-malvern-teal inline-flex w-full items-center justify-center rounded border-2 py-2.5 text-sm font-semibold"
-                >
-                  <Text field={fields.FreeQuoteText} />
-                </SitecoreLink>
-              )}
               {fields.PhoneLink?.value?.href && (
                 <SitecoreLink
                   field={fields.PhoneLink}
-                  className="flex items-center gap-2 text-sm font-semibold text-[#333]"
+                  className="text-malvern-teal-dark flex items-center gap-2 text-sm font-semibold"
                 >
                   <Phone className="h-4 w-4" />
                   <Text field={fields.PhoneNumber} />

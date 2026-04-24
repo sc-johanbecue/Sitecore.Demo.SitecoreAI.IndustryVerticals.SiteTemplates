@@ -131,8 +131,8 @@ export const Default = (props: IntroWithTabsSectionProps): JSX.Element => {
                   <span
                     className={`inline-block border-b-2 px-4 py-3 text-sm font-semibold transition-colors ${
                       isActive
-                        ? 'border-malvern-link text-malvern-teal'
-                        : 'text-foreground-muted hover:text-malvern-teal border-transparent hover:border-gray-300'
+                        ? 'border-malvern-green text-malvern-teal-dark'
+                        : 'text-foreground-muted hover:text-malvern-teal-dark border-transparent hover:border-gray-300'
                     }`}
                   >
                     <DesktopTabLabel containerRef={containerRef} index={i} />
@@ -183,8 +183,8 @@ export const Default = (props: IntroWithTabsSectionProps): JSX.Element => {
             border-radius: 0.375rem;
             margin-bottom: 0.75rem;
             overflow: hidden;
-            background: #004c54;
-            border: 2px solid #004c54;
+            background: #003349;
+            border: 2px solid #003349;
           }
           :global(.tab-card .tab-card-trigger) {
             display: flex;
@@ -192,7 +192,7 @@ export const Default = (props: IntroWithTabsSectionProps): JSX.Element => {
             font-size: 1.0625rem;
             font-weight: 600;
             color: white;
-            background: #004c54;
+            background: #003349;
             cursor: pointer;
             border: none;
             text-align: left;
@@ -208,15 +208,15 @@ export const Default = (props: IntroWithTabsSectionProps): JSX.Element => {
             padding: 0;
           }
           :global(.tab-card[data-tab-active='true'] .tab-card-trigger) {
-            color: #004c54;
+            color: #003349;
             background: white;
-            border: 3px solid #004c54;
+            border: 3px solid #003349;
             border-radius: 0.375rem;
             padding: calc(1rem - 3px) calc(1.25rem - 3px);
             margin-bottom: 1rem;
           }
           :global(.tab-card[data-tab-active='true'] .tab-card-chevron) {
-            color: #004c54;
+            color: #003349;
           }
           :global(.tab-card[data-tab-active='true'] .tab-card-content) {
             background: transparent;

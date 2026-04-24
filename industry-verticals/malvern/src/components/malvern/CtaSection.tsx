@@ -65,7 +65,7 @@ export const Default = (props: CtaBannerSectionProps): JSX.Element => {
             />
           </div>
 
-          <div className="bg-malvern-sky lg:border-malvern-sky-deep/40 flex flex-1 flex-col justify-center rounded-lg border border-white/60 p-8 shadow-lg lg:z-10 lg:my-8 lg:-ml-10 lg:max-w-xl lg:rounded-lg lg:p-10 lg:shadow-xl">
+          <div className="bg-malvern-sky border-malvern-sky-deep/25 flex flex-1 flex-col justify-center rounded-lg border p-8 shadow-lg lg:z-10 lg:my-8 lg:-ml-10 lg:max-w-xl lg:rounded-lg lg:p-10 lg:shadow-xl">
             <h2 className="text-malvern-teal-dark mb-4 text-2xl leading-tight font-bold lg:text-3xl xl:text-4xl">
               <Text field={fields.Title} />
             </h2>
@@ -77,14 +77,14 @@ export const Default = (props: CtaBannerSectionProps): JSX.Element => {
             {fields.CTALink?.value?.href ? (
               <SitecoreLink
                 field={fields.CTALink}
-                className="bg-malvern-green hover:bg-malvern-green-hover inline-flex w-full items-center justify-center rounded px-8 py-3 text-sm font-semibold text-white transition-colors sm:w-auto lg:inline-flex"
+                className="bg-malvern-green hover:bg-malvern-green-hover inline-flex w-full items-center justify-center rounded-md px-8 py-3 text-sm font-semibold text-white transition-colors sm:w-auto lg:inline-flex"
               >
                 <Text field={fields.CTAText} />
               </SitecoreLink>
             ) : (
               <button
                 type="button"
-                className="bg-malvern-green inline-flex w-full items-center justify-center rounded px-8 py-3 text-sm font-semibold text-white sm:w-auto"
+                className="bg-malvern-green inline-flex w-full items-center justify-center rounded-md px-8 py-3 text-sm font-semibold text-white sm:w-auto"
               >
                 <Text field={fields.CTAText} />
               </button>

@@ -30,7 +30,7 @@ const defaultFields: Fields = {
   Title: { value: '<p>Groundbreaking solutions for your laboratory</p>' },
   CTAText: { value: 'Discover more' },
   CTALink: { value: { href: '/solutions' } },
-  BackgroundColor: { value: '#004c54' },
+  BackgroundColor: { value: '#003349' },
   Image: { value: { src: '/promo-benchmark.jpg', alt: 'Product' } },
 };
 
@@ -43,7 +43,7 @@ export const Default = (props: PromoBannerSectionProps): JSX.Element => {
   const { styles } = props.params;
   const fields = props.fields || defaultFields;
 
-  const bgColor = (fields.BackgroundColor?.value as string) || '#004c54';
+  const bgColor = (fields.BackgroundColor?.value as string) || '#003349';
 
   return (
     <section

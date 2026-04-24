@@ -147,7 +147,11 @@ export default function AuthButtons() {
       <UserInfoWithHover user={user} />
       <br />
       {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-      <a href="/api/auth/logout" onClick={handleLogoutClick} className="text-[#E2231A] hover:underline">
+      <a
+        href="/api/auth/logout"
+        onClick={handleLogoutClick}
+        className="text-[#E2231A] hover:underline"
+      >
         Logout
       </a>
     </div>
@@ -185,7 +189,11 @@ export const Default = (props: NavigationIconsProps): JSX.Element => {
                     <UserInfoWithHover user={user} />
                   </div>
                   {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                  <a href="/api/auth/logout" onClick={handleLogoutClick} className="ml-1 text-[#E2231A] hover:underline">
+                  <a
+                    href="/api/auth/logout"
+                    onClick={handleLogoutClick}
+                    className="ml-1 text-[#E2231A] hover:underline"
+                  >
                     {t('logout') || 'Log out'}
                   </a>
                 </div>

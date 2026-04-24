@@ -25,6 +25,8 @@ import {
 import type { EntitlementItem, RoleItem } from '@/lib/entitlements/componentEntitlements';
 
 interface Fields {
+  /** Small pill above the headline (e.g. “New release”) — optional; omit value to hide */
+  Eyebrow?: TextField;
   Title: TextField;
   Subtitle: RichTextField;
   EmailPlaceholder: TextField;
@@ -38,6 +40,7 @@ interface Fields {
 }
 
 const defaultFields: Fields = {
+  Eyebrow: { value: 'New release' },
   Title: { value: 'Fast-track your research' },
   Subtitle: {
     value:
@@ -103,6 +106,13 @@ export const Default = (props: HeroSectionProps): JSX.Element | null => {
         <div className="flex flex-col items-stretch gap-8 lg:flex-row lg:items-center lg:gap-12">
           {/* Text Content */}
           <div className="flex-1 lg:max-w-xl lg:pt-4">
+            {fields.Eyebrow?.value ? (
+              <p className="mb-3">
+                <span className="inline-block rounded-full border border-white/35 bg-white/10 px-3 py-1 text-xs font-semibold tracking-wide text-white uppercase">
+                  <Text field={fields.Eyebrow} />
+                </span>
+              </p>
+            ) : null}
             <h1 className="mb-4 text-3xl leading-tight font-bold text-white lg:text-5xl lg:leading-tight">
               <Text field={fields.Title} />
             </h1>
@@ -116,11 +126,11 @@ export const Default = (props: HeroSectionProps): JSX.Element | null => {
                 <input
                   type="email"
                   placeholder={fields.EmailPlaceholder.value as string}
-                  className="flex-1 rounded border border-white/30 bg-white/10 px-4 py-3 text-sm text-white transition-colors outline-none placeholder:text-white/60 focus:border-white/60 focus:ring-1 focus:ring-white/40"
+                  className="flex-1 rounded-md border border-white/30 bg-white/10 px-4 py-3 text-sm text-white transition-colors outline-none placeholder:text-white/60 focus:border-white/60 focus:ring-1 focus:ring-white/40"
                 />
                 <SitecoreLink
                   field={fields.CTALink}
-                  className="bg-malvern-green hover:bg-malvern-green-hover inline-flex w-full items-center justify-center rounded px-6 py-3 text-sm font-semibold text-white transition-colors sm:w-auto"
+                  className="bg-malvern-green hover:bg-malvern-green-hover inline-flex w-full items-center justify-center rounded-md px-6 py-3 text-sm font-semibold text-white transition-colors sm:w-auto"
                 >
                   <Text field={fields.CTAText} />
                 </SitecoreLink>
@@ -128,7 +138,7 @@ export const Default = (props: HeroSectionProps): JSX.Element | null => {
             ) : (
               <SitecoreLink
                 field={fields.CTALink}
-                className="bg-malvern-green hover:bg-malvern-green-hover inline-flex w-full items-center justify-center rounded px-8 py-3.5 text-sm font-semibold text-white transition-colors sm:w-auto lg:px-10 lg:py-4 lg:text-base"
+                className="bg-malvern-green hover:bg-malvern-green-hover inline-flex w-full items-center justify-center rounded-md px-8 py-3.5 text-sm font-semibold text-white transition-colors sm:w-auto lg:px-10 lg:py-4 lg:text-base"
               >
                 <Text field={fields.CTAText} />
               </SitecoreLink>

@@ -45,7 +45,7 @@ export const Default = (props: SearchFilterSectionProps): JSX.Element => {
 
   return (
     <section
-      className={`component search-filter-section bg-[#F7F7F7] py-10 lg:py-14 ${styles || ''}`}
+      className={`component search-filter-section bg-malvern-sky py-10 lg:py-14 ${styles || ''}`}
       id={id}
     >
       <div className="mx-auto max-w-7xl px-4">
@@ -53,15 +53,15 @@ export const Default = (props: SearchFilterSectionProps): JSX.Element => {
           <Text field={fields.Title} />
         </h2>
 
-        {/* Filter Bar */}
-        <div className="mx-auto flex max-w-3xl flex-col items-stretch gap-3 lg:flex-row lg:items-end lg:gap-4">
+        {/* Filter Bar — light panel, inputs + green CTA */}
+        <div className="border-malvern-sky-deep/20 mx-auto flex max-w-3xl flex-col items-stretch gap-3 rounded-lg border bg-white/90 p-4 shadow-sm lg:flex-row lg:items-end lg:gap-4 lg:p-5">
           {/* Employees Dropdown */}
           <div className="flex-1">
             <label className="sr-only">
               <Text field={fields.EmployeesLabel} />
             </label>
             <select
-              className="focus:border-malvern-teal focus:ring-malvern-teal/30 w-full rounded border border-gray-300 bg-white px-4 py-3 text-sm text-[#333] outline-none focus:ring-1"
+              className="focus:border-malvern-teal focus:ring-malvern-teal/30 w-full rounded-md border border-gray-200 bg-white px-4 py-3 text-sm text-[#333] outline-none focus:ring-1"
               defaultValue=""
             >
               <option value="" disabled>
@@ -79,7 +79,7 @@ export const Default = (props: SearchFilterSectionProps): JSX.Element => {
               <Text field={fields.InterestLabel} />
             </label>
             <select
-              className="focus:border-malvern-teal focus:ring-malvern-teal/30 w-full rounded border border-gray-300 bg-white px-4 py-3 text-sm text-[#333] outline-none focus:ring-1"
+              className="focus:border-malvern-teal focus:ring-malvern-teal/30 w-full rounded-md border border-gray-200 bg-white px-4 py-3 text-sm text-[#333] outline-none focus:ring-1"
               defaultValue=""
             >
               <option value="" disabled>
@@ -96,7 +96,7 @@ export const Default = (props: SearchFilterSectionProps): JSX.Element => {
           {/* Show Me Button */}
           <SitecoreLink
             field={fields.CTALink}
-            className="bg-malvern-green hover:bg-malvern-green-hover inline-flex w-full items-center justify-center rounded px-8 py-3 text-sm font-semibold text-white transition-colors lg:w-auto"
+            className="bg-malvern-green hover:bg-malvern-green-hover inline-flex w-full items-center justify-center rounded-md px-8 py-3 text-sm font-semibold text-white transition-colors lg:w-auto"
           >
             <Text field={fields.CTAText} />
           </SitecoreLink>

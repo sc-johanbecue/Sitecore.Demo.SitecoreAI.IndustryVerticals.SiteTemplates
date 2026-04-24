@@ -47,10 +47,20 @@ export const Default = (props: BenefitCardProps): JSX.Element => {
         </h3>
       )}
       {fields.Description?.value && (
-        <div className="text-sm leading-relaxed text-[#555] md:text-base">
+        <div className="tab-benefit-desc text-sm leading-relaxed text-[#555] md:text-base">
           <RichText field={fields.Description} />
         </div>
       )}
+      <style jsx>{`
+        .tab-benefit-desc :global(a) {
+          color: #0066b3;
+          text-decoration: none;
+          font-weight: 600;
+        }
+        .tab-benefit-desc :global(a:hover) {
+          text-decoration: underline;
+        }
+      `}</style>
     </div>
   );
 };

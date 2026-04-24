@@ -75,6 +75,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/shadcn/components/ui/
 import { MiniCart } from 'src/components/non-sitecore/MiniCart';
 import PreviewSearch_938f3b0320996fc3fe6ab3d953daf2e708e085ca from 'src/components/non-sitecore/search/PreviewSearch';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { event, pageView, identity } from '@sitecore-cloudsdk/events/browser';
 import { getUserEntitlementsFromUser, getUserRolesFromUser, getEntitlementOperatorFromField, getRequiredAuth0KeysFromEntitlements, getRequiredRolesFromField, useComponentEntitlementDecision } from '@/lib/entitlements/componentEntitlements';
 import HamburgerIcon from '@/components/non-sitecore/HamburgerIcon';
 import { useClickAway } from '@/hooks/useClickAway';
@@ -89,10 +90,10 @@ import { generateIndexes } from '@/helpers/generateIndexes';
 import client from 'lib/sitecore-client';
 import * as FEAAS from '@sitecore-feaas/clientside/react';
 import nextConfig from 'next.config';
-import { pageView, identity } from '@sitecore-cloudsdk/events/browser';
 import config from 'sitecore.config';
 import { faUser, faCalendar, faTag } from '@fortawesome/free-solid-svg-icons';
 import { sortByDateDesc, getCategoryCounts } from '@/helpers/articleUtils';
+import { sendIdentity } from 'src/lib/sitecore/send-identity';
 
 const importMap = [
   {
@@ -594,6 +595,14 @@ const importMap = [
     ]
   },
   {
+    module: '@sitecore-cloudsdk/events/browser',
+    exports: [
+      { name: 'event', value: event },
+      { name: 'pageView', value: pageView },
+      { name: 'identity', value: identity },
+    ]
+  },
+  {
     module: '@/lib/entitlements/componentEntitlements',
     exports: [
       { name: 'getUserEntitlementsFromUser', value: getUserEntitlementsFromUser },
@@ -691,13 +700,6 @@ const importMap = [
     ]
   },
   {
-    module: '@sitecore-cloudsdk/events/browser',
-    exports: [
-      { name: 'pageView', value: pageView },
-      { name: 'identity', value: identity },
-    ]
-  },
-  {
     module: 'sitecore.config',
     exports: [
       { name: 'default', value: config },
@@ -716,6 +718,12 @@ const importMap = [
     exports: [
       { name: 'sortByDateDesc', value: sortByDateDesc },
       { name: 'getCategoryCounts', value: getCategoryCounts },
+    ]
+  },
+  {
+    module: 'src/lib/sitecore/send-identity',
+    exports: [
+      { name: 'sendIdentity', value: sendIdentity },
     ]
   }
 ] as ImportEntry[];

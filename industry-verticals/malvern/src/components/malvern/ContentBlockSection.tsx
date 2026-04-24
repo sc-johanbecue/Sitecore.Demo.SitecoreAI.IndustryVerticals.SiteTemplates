@@ -75,7 +75,7 @@ export const Default = (props: ContentBlockSectionProps): JSX.Element => {
   const imageOnLeft = (fields.ImagePosition?.value as string)?.toLowerCase() === 'left';
   const bgColor =
     (fields.BackgroundVariant?.value as string)?.toLowerCase() === 'gray'
-      ? 'bg-[#F7F7F7]'
+      ? 'bg-malvern-sky'
       : 'bg-white';
 
   return (
@@ -120,7 +120,7 @@ export const Default = (props: ContentBlockSectionProps): JSX.Element => {
             {fields.CTALink?.value?.href && fields.CTAText?.value && (
               <SitecoreLink
                 field={fields.CTALink}
-                className="bg-malvern-green hover:bg-malvern-green-hover inline-flex items-center rounded px-6 py-2.5 text-sm font-semibold text-white transition-colors"
+                className="bg-malvern-green hover:bg-malvern-green-hover inline-flex items-center rounded-md px-6 py-2.5 text-sm font-semibold text-white transition-colors"
               >
                 <Text field={fields.CTAText} />
               </SitecoreLink>
