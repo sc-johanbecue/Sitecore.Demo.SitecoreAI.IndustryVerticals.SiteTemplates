@@ -38,6 +38,7 @@ import * as ArticleHorizontalCard from 'src/components/non-sitecore/search/Artic
 import * as ArticleCard from 'src/components/non-sitecore/search/ArticleCard';
 import * as NavigationIcons from 'src/components/navigation-icons/NavigationIcons';
 import * as Navigation from 'src/components/navigation/Navigation';
+import * as MattheyTechSession from 'src/components/matthey/MattheyTechSession';
 import * as MattheyVideoSection from 'src/components/matthey/custom-header/MattheyVideoSection';
 import * as MattheyTextWithImageSection from 'src/components/matthey/custom-header/MattheyTextWithImageSection';
 import * as MattheyStatsSection from 'src/components/matthey/custom-header/MattheyStatsSection';
@@ -61,6 +62,7 @@ import * as MattheyHeroCarouselCard from 'src/components/matthey/custom-header/M
 import * as MattheyHeader from 'src/components/matthey/custom-header/MattheyHeader';
 import * as MattheyFooter from 'src/components/matthey/custom-header/MattheyFooter';
 import * as MattheyContentSection from 'src/components/matthey/custom-header/MattheyContentSection';
+import * as JBENSWI from 'src/components/matthey/custom-header/JBENSWI';
 import * as LinkList from 'src/components/link-list/LinkList';
 import * as LanguageSwitcher from 'src/components/language-switcher/LanguageSwitcher';
 import * as Image from 'src/components/image/Image';
@@ -115,6 +117,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ArticleCard', { ...ArticleCard }],
   ['NavigationIcons', { ...NavigationIcons }],
   ['Navigation', { ...Navigation, componentType: 'client' }],
+  ['MattheyTechSession', { ...MattheyTechSession }],
   ['MattheyVideoSection', { ...MattheyVideoSection, componentType: 'client' }],
   ['MattheyTextWithImageSection', { ...MattheyTextWithImageSection, componentType: 'client' }],
   ['MattheyStatsSection', { ...MattheyStatsSection, componentType: 'client' }],
@@ -138,6 +141,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['MattheyHeader', { ...MattheyHeader }],
   ['MattheyFooter', { ...MattheyFooter, componentType: 'client' }],
   ['MattheyContentSection', { ...MattheyContentSection }],
+  ['JBENSWI', { ...JBENSWI, componentType: 'client' }],
   ['LinkList', { ...LinkList }],
   ['LanguageSwitcher', { ...LanguageSwitcher, componentType: 'client' }],
   ['Image', { ...Image }],
