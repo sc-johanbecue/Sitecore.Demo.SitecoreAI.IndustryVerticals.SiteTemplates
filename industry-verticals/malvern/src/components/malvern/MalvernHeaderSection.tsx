@@ -1,6 +1,6 @@
 'use client';
 
-import React, { type JSX, useState } from 'react';
+import React, { type JSX, useEffect, useState } from 'react';
 import {
   TextField,
   Text,
@@ -11,18 +11,19 @@ import {
   Placeholder,
 } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
-import { Menu, X, Search } from 'lucide-react';
+import { Menu, X, Search, ChevronDown } from 'lucide-react';
 
 /**
  * MalvernHeaderSection
- * Malvern Panalytical-style header: utility bar, main nav, search, Register / Login, feedback tab.
- * Structure mirrors adp HeaderSection (sticky, hamburger, desktop nav, Placeholder).
+ * Desktop: dark utility bar (language + links, Login / Register) + white main row (logo, main nav placeholder, search).
+ * Mobile: white bar with logo + menu; full-screen teal overlay with main placeholder, utility links, search.
  */
 
 interface Fields {
   Logo: ImageField;
   LogoLink: LinkField;
-  Tagline: TextField;
+  LanguageText: TextField;
+  LanguageLink: LinkField;
   Utility1Text: TextField;
   Utility1Link: LinkField;
   Utility2Text: TextField;
@@ -37,21 +38,7 @@ interface Fields {
   RegisterLink: LinkField;
   LoginText: TextField;
   LoginLink: LinkField;
-  NavItem1Text: TextField;
-  NavItem1Link: LinkField;
-  NavItem2Text: TextField;
-  NavItem2Link: LinkField;
-  NavItem3Text: TextField;
-  NavItem3Link: LinkField;
-  NavItem4Text: TextField;
-  NavItem4Link: LinkField;
-  NavItem5Text: TextField;
-  NavItem5Link: LinkField;
-  NavItem6Text: TextField;
-  NavItem6Link: LinkField;
   SearchPlaceholder: TextField;
-  FeedbackText: TextField;
-  FeedbackLink: LinkField;
   CloseMenuText: TextField;
   OpenMenuText: TextField;
 }
@@ -59,36 +46,23 @@ interface Fields {
 const defaultFields: Fields = {
   Logo: { value: { src: '/logos/malvern-logo.svg', alt: 'Malvern Panalytical' } },
   LogoLink: { value: { href: '/' } },
-  Tagline: { value: 'a spectris company' },
-  Utility1Text: { value: 'Events' },
-  Utility1Link: { value: { href: '/events' } },
-  Utility2Text: { value: 'Careers' },
-  Utility2Link: { value: { href: '/careers' } },
-  Utility3Text: { value: 'Support' },
-  Utility3Link: { value: { href: '/support' } },
+  LanguageText: { value: 'English' },
+  LanguageLink: { value: { href: '/en' } },
+  Utility1Text: { value: 'About us' },
+  Utility1Link: { value: { href: '/about' } },
+  Utility2Text: { value: 'Blog' },
+  Utility2Link: { value: { href: '/blog' } },
+  Utility3Text: { value: 'Careers' },
+  Utility3Link: { value: { href: '/careers' } },
   Utility4Text: { value: 'Store' },
   Utility4Link: { value: { href: '/store' } },
-  Utility5Text: { value: 'Contact Us' },
+  Utility5Text: { value: 'Contact us' },
   Utility5Link: { value: { href: '/contact' } },
   RegisterText: { value: 'Register' },
   RegisterLink: { value: { href: '/register' } },
   LoginText: { value: 'Login' },
   LoginLink: { value: { href: '/login' } },
-  NavItem1Text: { value: 'Products' },
-  NavItem1Link: { value: { href: '/products' } },
-  NavItem2Text: { value: 'Services' },
-  NavItem2Link: { value: { href: '/services' } },
-  NavItem3Text: { value: 'Solutions' },
-  NavItem3Link: { value: { href: '/solutions' } },
-  NavItem4Text: { value: 'Sectors' },
-  NavItem4Link: { value: { href: '/sectors' } },
-  NavItem5Text: { value: 'Learning Center' },
-  NavItem5Link: { value: { href: '/learning' } },
-  NavItem6Text: { value: 'Support' },
-  NavItem6Link: { value: { href: '/support' } },
   SearchPlaceholder: { value: 'Search' },
-  FeedbackText: { value: 'Feedback' },
-  FeedbackLink: { value: { href: '/feedback' } },
   CloseMenuText: { value: 'Close menu' },
   OpenMenuText: { value: 'Open menu' },
 };
@@ -100,12 +74,12 @@ export type MalvernHeaderSectionProps = ComponentProps & {
 export const Default = (props: MalvernHeaderSectionProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
   const { styles, DynamicPlaceholderId } = props.params;
-  const fields = props.fields || defaultFields;
+  const fields = { ...defaultFields, ...(props.fields || {}) } as Fields;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const phHeaderNav = `malvern-header-nav-${DynamicPlaceholderId}`;
 
-  const utilityLinks = [
+  const utilityItems = [
     { text: fields.Utility1Text, link: fields.Utility1Link },
     { text: fields.Utility2Text, link: fields.Utility2Link },
     { text: fields.Utility3Text, link: fields.Utility3Link },
@@ -113,124 +87,197 @@ export const Default = (props: MalvernHeaderSectionProps): JSX.Element => {
     { text: fields.Utility5Text, link: fields.Utility5Link },
   ];
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return undefined;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isMobileMenuOpen]);
+
+  const utilityLinkClass = 'text-white/95 transition-colors hover:text-white hover:underline';
+  const utilityLinkClassDesktop =
+    'text-white/90 transition-colors hover:text-white hover:underline';
+
   return (
     <>
       <header
         className={`component malvern-header-section sticky top-0 z-50 bg-white shadow-sm ${styles || ''}`}
         id={id}
       >
-        {/* Utility bar */}
-        <div className="bg-[#00333d] text-white">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 text-xs sm:text-sm">
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-              {utilityLinks.map((u, i) => (
-                <SitecoreLink
-                  key={i}
-                  field={u.link}
-                  className="text-white/90 transition-colors hover:text-white hover:underline"
-                >
+        {/* Utility bar — desktop only */}
+        <div className="hidden bg-[#00333d] text-white lg:block">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 text-sm">
+            <div className="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-1">
+              <SitecoreLink
+                field={fields.LanguageLink}
+                className={`inline-flex items-center gap-1 ${utilityLinkClassDesktop}`}
+              >
+                <Text tag="span" field={fields.LanguageText} className="inline" />
+                <ChevronDown className="h-3.5 w-3.5 shrink-0 opacity-90" aria-hidden />
+              </SitecoreLink>
+              {utilityItems.map((u, i) => (
+                <SitecoreLink key={i} field={u.link} className={utilityLinkClassDesktop}>
                   <Text tag="span" field={u.text} className="inline" />
                 </SitecoreLink>
               ))}
             </div>
             <div className="flex shrink-0 items-center gap-2">
               <SitecoreLink
-                field={fields.RegisterLink}
-                className="hidden rounded border border-white/60 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-white/10 sm:inline-flex"
-              >
-                <Text tag="span" field={fields.RegisterText} className="inline" />
-              </SitecoreLink>
-              <SitecoreLink
                 field={fields.LoginLink}
-                className="rounded border border-[#00A651] bg-[#00A651] px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-[#008f45] sm:px-4"
+                className="rounded-md bg-[#2ec4d6] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#26b0c2]"
               >
                 <Text tag="span" field={fields.LoginText} className="inline" />
+              </SitecoreLink>
+              <SitecoreLink
+                field={fields.RegisterLink}
+                className="rounded-md border border-white px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+              >
+                <Text tag="span" field={fields.RegisterText} className="inline" />
               </SitecoreLink>
             </div>
           </div>
         </div>
 
         {/* Main bar */}
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="flex h-14 items-center justify-between gap-3 lg:h-[4.25rem]">
-            <div className="flex min-w-0 items-center gap-3">
-              <button
-                type="button"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="flex h-10 w-10 shrink-0 items-center justify-center text-[#00333d] lg:hidden"
-                aria-label={
-                  isMobileMenuOpen
-                    ? (fields.CloseMenuText?.value as string)
-                    : (fields.OpenMenuText?.value as string)
-                }
-              >
-                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
+        <div className="border-b border-gray-100">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 lg:h-[4.25rem] lg:py-0">
+            <SitecoreLink
+              field={fields.LogoLink}
+              className="flex min-w-0 shrink items-center gap-2.5 lg:gap-3"
+            >
+              <SitecoreImage field={fields.Logo} className="h-9 w-auto shrink-0 lg:h-10" />
+            </SitecoreLink>
 
-              <SitecoreLink field={fields.LogoLink} className="flex min-w-0 items-center gap-2">
-                <SitecoreImage field={fields.Logo} className="h-8 w-auto shrink-0 lg:h-9" />
-                <Text
-                  tag="span"
-                  field={fields.Tagline}
-                  className="hidden text-[10px] leading-tight text-[#5a6a6e] sm:block lg:text-xs"
-                />
-              </SitecoreLink>
-            </div>
-
-            <nav className="hidden flex-1 items-center justify-center gap-1 px-4 lg:flex">
-              <div className="malvern-header-nav-wrapper flex items-center">
+            <nav className="malvern-header-nav-desktop hidden flex-1 items-center justify-center px-6 lg:flex">
+              <div className="malvern-header-nav-wrapper flex flex-wrap items-center justify-center gap-x-6 gap-y-1 xl:gap-x-8">
                 <Placeholder name={phHeaderNav} rendering={props.rendering} />
               </div>
             </nav>
 
-            <div className="flex shrink-0 items-center gap-2 lg:gap-3">
-              <div className="relative hidden md:block">
-                <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#5a6a6e]" />
+            <div className="hidden shrink-0 items-center lg:flex">
+              <div className="flex items-stretch overflow-hidden rounded-lg border border-gray-200 bg-gray-100 shadow-sm">
                 <input
                   type="search"
                   placeholder={fields.SearchPlaceholder?.value as string}
-                  className="w-44 rounded border border-gray-200 py-2 pr-3 pl-9 text-sm text-[#1a2b2f] outline-none focus:border-[#00A651] lg:w-52"
+                  className="min-h-0 w-44 border-0 bg-transparent py-2.5 pr-2 pl-3 text-sm text-[#1a2b2f] outline-none placeholder:text-gray-500 xl:w-52"
                   aria-label={fields.SearchPlaceholder?.value as string}
                 />
+                <button
+                  type="button"
+                  className="flex min-w-11 shrink-0 items-center justify-center self-stretch bg-[#00333d] px-3 text-white transition-colors hover:bg-[#004a57]"
+                  aria-label={fields.SearchPlaceholder?.value as string}
+                >
+                  <Search className="h-4 w-4" strokeWidth={2.25} />
+                </button>
               </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen((o) => !o)}
+              className="flex h-10 w-10 shrink-0 items-center justify-center text-[#00333d] lg:hidden"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="malvern-mobile-menu"
+              aria-label={
+                isMobileMenuOpen
+                  ? (fields.CloseMenuText?.value as string)
+                  : (fields.OpenMenuText?.value as string)
+              }
+            >
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Full-screen mobile menu */}
+      {isMobileMenuOpen && (
+        <div
+          id="malvern-mobile-menu"
+          className="fixed inset-0 z-[100] flex flex-col bg-[#00333d] text-white lg:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Main navigation"
+        >
+          <div className="flex shrink-0 justify-end px-4 pt-4">
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex h-11 w-11 items-center justify-center text-white"
+              aria-label={fields.CloseMenuText?.value as string}
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+
+          <nav className="min-h-0 flex-1 overflow-y-auto px-6 pt-2 pb-6" aria-label="Primary">
+            <div className="malvern-mobile-main-nav flex flex-col gap-1">
+              <Placeholder name={phHeaderNav} rendering={props.rendering} />
+            </div>
+          </nav>
+
+          <div className="shrink-0 border-t border-white/15 px-4 pt-5 pb-8">
+            <div className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/95">
+              <SitecoreLink
+                field={fields.LanguageLink}
+                className={`inline-flex items-center gap-1 ${utilityLinkClass}`}
+              >
+                <Text tag="span" field={fields.LanguageText} className="inline" />
+                <ChevronDown className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              </SitecoreLink>
+              {utilityItems.map((u, i) => (
+                <SitecoreLink key={i} field={u.link} className={utilityLinkClass}>
+                  <Text tag="span" field={u.text} className="inline" />
+                </SitecoreLink>
+              ))}
+            </div>
+            <div className="flex items-stretch overflow-hidden rounded-lg">
+              <input
+                type="search"
+                placeholder={fields.SearchPlaceholder?.value as string}
+                className="min-h-0 min-w-0 flex-1 border-0 bg-gray-200 px-4 py-3.5 text-sm text-[#1a2b2f] outline-none placeholder:text-gray-500"
+                aria-label={fields.SearchPlaceholder?.value as string}
+              />
               <button
                 type="button"
-                className="flex h-10 w-10 items-center justify-center text-[#00333d] md:hidden"
+                className="flex w-14 shrink-0 items-center justify-center self-stretch bg-[#081820] text-white"
                 aria-label={fields.SearchPlaceholder?.value as string}
               >
-                <Search className="h-5 w-5" />
+                <Search className="h-5 w-5" strokeWidth={2.25} />
               </button>
             </div>
           </div>
         </div>
+      )}
 
-        {isMobileMenuOpen && (
-          <div className="border-t border-gray-100 bg-white shadow-lg lg:hidden">
-            <div className="mx-auto max-w-7xl px-4 py-4">
-              <div className="malvern-mobile-nav-wrapper mt-2">
-                <Placeholder name={phHeaderNav} rendering={props.rendering} />
-              </div>
-              <div className="mt-4 flex flex-col gap-2 border-t border-gray-200 pt-4">
-                <SitecoreLink
-                  field={fields.RegisterLink}
-                  className="inline-flex justify-center rounded border border-[#00333d] py-2 text-sm font-semibold text-[#00333d]"
-                >
-                  <Text tag="span" field={fields.RegisterText} className="inline" />
-                </SitecoreLink>
-              </div>
-            </div>
-          </div>
-        )}
-      </header>
-
-      {/* Feedback tab — outside header so it spans viewport */}
-      <SitecoreLink
-        field={fields.FeedbackLink}
-        className="fixed top-1/2 right-0 z-40 flex -translate-y-1/2 rounded-l-md bg-[#7ec8e3] px-1.5 py-6 text-xs font-semibold tracking-wide text-[#00333d] shadow-md"
-        style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
-      >
-        <Text tag="span" field={fields.FeedbackText} className="inline" />
-      </SitecoreLink>
+      <style jsx>{`
+        /* Main nav placeholder: large vertical links (mobile overlay) */
+        .malvern-mobile-main-nav :global(a) {
+          display: block;
+          padding: 0.65rem 0;
+          font-size: 1.25rem;
+          font-weight: 500;
+          color: #fff;
+          text-decoration: none;
+        }
+        .malvern-mobile-main-nav :global(a:hover) {
+          text-decoration: underline;
+        }
+        /* Desktop: horizontal grey nav links */
+        .malvern-header-nav-desktop :global(.malvern-header-nav-wrapper a) {
+          color: #3d4f54;
+          font-size: 0.9375rem;
+          font-weight: 500;
+          text-decoration: none;
+          white-space: nowrap;
+        }
+        .malvern-header-nav-desktop :global(.malvern-header-nav-wrapper a:hover) {
+          color: #00333d;
+          text-decoration: underline;
+        }
+      `}</style>
     </>
   );
 };
