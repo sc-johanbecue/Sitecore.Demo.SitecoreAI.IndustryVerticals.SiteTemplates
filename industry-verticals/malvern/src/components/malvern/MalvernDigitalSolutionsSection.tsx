@@ -63,14 +63,14 @@ export const Default = (props: MalvernDigitalSolutionsSectionProps): JSX.Element
     >
       <div className="mx-auto max-w-7xl px-4">
         <div className="malvern-digital-solutions-tile flex flex-col overflow-hidden lg:flex-row">
-          <div className="relative w-full max-md:h-[clamp(11rem,42vmin,20rem)] max-md:min-h-44 max-md:shrink-0 max-md:overflow-hidden max-md:rounded-t-2xl lg:h-auto lg:min-h-80 lg:w-1/2 lg:overflow-hidden lg:rounded-bl-2xl lg:rounded-tl-2xl xl:min-h-88">
+          <div className="relative w-full max-md:h-[clamp(11rem,42vmin,20rem)] max-md:min-h-44 max-md:shrink-0 max-md:overflow-hidden max-md:rounded-t-2xl lg:h-auto lg:min-h-80 lg:w-1/2 lg:overflow-hidden lg:rounded-tl-2xl lg:rounded-bl-2xl xl:min-h-88">
             <SitecoreImage
               field={fields.Image}
               className="h-full w-full object-cover object-center"
             />
           </div>
 
-          <div className="overflow-hidden rounded-bl-2xl lg:w-1/2 lg:rounded-bl-none lg:rounded-tr-2xl">
+          <div className="overflow-hidden rounded-bl-2xl lg:w-1/2 lg:rounded-tr-2xl lg:rounded-bl-none">
             <div
               className={`malvern-digital-solutions-content flex flex-col justify-center bg-[#c5e8f0] px-7 py-10 sm:px-9 sm:py-11 lg:min-h-80 lg:px-10 lg:py-12 xl:min-h-88 xl:px-12 xl:py-14 ${contentClip}`}
             >
