@@ -40,8 +40,10 @@ import * as NavigationIcons from 'src/components/navigation-icons/NavigationIcon
 import * as Navigation from 'src/components/navigation/Navigation';
 import * as MalvernValuePropsSection from 'src/components/malvern/MalvernValuePropsSection';
 import * as MalvernValuePropCard from 'src/components/malvern/MalvernValuePropCard';
+import * as MalvernTabExplorerTab from 'src/components/malvern/MalvernTabExplorerTab';
 import * as MalvernTabExplorerCard from 'src/components/malvern/MalvernTabExplorerCard';
 import * as MalvernTabbedExplorerSection from 'src/components/malvern/MalvernTabbedExplorerSection';
+import * as MalvernTabbedExplorerContext from 'src/components/malvern/MalvernTabbedExplorerContext';
 import * as MalvernStayConnectedSection from 'src/components/malvern/MalvernStayConnectedSection';
 import * as MalvernSearchInsightsSection from 'src/components/malvern/MalvernSearchInsightsSection';
 import * as MalvernPromoFeatureCard from 'src/components/malvern/MalvernPromoFeatureCard';
@@ -150,8 +152,10 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['Navigation', { ...Navigation, componentType: 'client' }],
   ['MalvernValuePropsSection', { ...MalvernValuePropsSection, componentType: 'client' }],
   ['MalvernValuePropCard', { ...MalvernValuePropCard, componentType: 'client' }],
+  ['MalvernTabExplorerTab', { ...MalvernTabExplorerTab, componentType: 'client' }],
   ['MalvernTabExplorerCard', { ...MalvernTabExplorerCard, componentType: 'client' }],
   ['MalvernTabbedExplorerSection', { ...MalvernTabbedExplorerSection, componentType: 'client' }],
+  ['MalvernTabbedExplorerContext', { ...MalvernTabbedExplorerContext, componentType: 'client' }],
   ['MalvernStayConnectedSection', { ...MalvernStayConnectedSection, componentType: 'client' }],
   ['MalvernSearchInsightsSection', { ...MalvernSearchInsightsSection, componentType: 'client' }],
   ['MalvernPromoFeatureCard', { ...MalvernPromoFeatureCard, componentType: 'client' }],

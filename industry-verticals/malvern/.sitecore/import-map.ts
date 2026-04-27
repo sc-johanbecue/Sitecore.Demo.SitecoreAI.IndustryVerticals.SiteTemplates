@@ -8,7 +8,7 @@ import {
 // end of built-in imports
 
 import { Link, Text, useSitecore, RichText, NextImage, Placeholder, Image as Image_8a80e63291fea86e0744df19113dc44bec187216, CdpHelper, withDatasourceCheck, DateField } from '@sitecore-content-sdk/nextjs';
-import { useMemo, useRef, useState, useEffect, useId, useCallback } from 'react';
+import { useMemo, useRef, useState, useEffect, useId, useCallback, useLayoutEffect, createContext, useContext } from 'react';
 import React from 'react';
 import Head from 'next/head';
 import { useI18n } from 'next-localization';
@@ -82,6 +82,7 @@ import { useStopResponsiveTransition } from '@/hooks/useStopResponsiveTransition
 import { extractMediaUrl } from '@/helpers/extractMediaUrl';
 import { getLinkContent, getLinkField, isNavLevel, isNavRootItem, prepareFields } from '@/helpers/navHelpers';
 import { ENTITLEMENTS_CLAIM } from 'lib/entitlements';
+import { useMalvernTabbedExplorerApi, MalvernTabbedExplorerContext } from 'src/components/malvern/MalvernTabbedExplorerContext';
 import { useRouter as useRouter_0e8a928699f624a3ad05eb9c9906b0e7ce1a00be } from 'next/router';
 import { Select as Select_4a7098778d43a9b4dcd5871ec48ea51b5a246850, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'src/shadcn/components/ui/select';
 import { localeOptions } from '@/constants/localeOptions';
@@ -119,6 +120,9 @@ const importMap = [
       { name: 'useEffect', value: useEffect },
       { name: 'useId', value: useId },
       { name: 'useCallback', value: useCallback },
+      { name: 'useLayoutEffect', value: useLayoutEffect },
+      { name: 'createContext', value: createContext },
+      { name: 'useContext', value: useContext },
       { name: 'default', value: React },
     ]
   },
@@ -638,6 +642,13 @@ const importMap = [
     module: 'lib/entitlements',
     exports: [
       { name: 'ENTITLEMENTS_CLAIM', value: ENTITLEMENTS_CLAIM },
+    ]
+  },
+  {
+    module: 'src/components/malvern/MalvernTabbedExplorerContext',
+    exports: [
+      { name: 'useMalvernTabbedExplorerApi', value: useMalvernTabbedExplorerApi },
+      { name: 'MalvernTabbedExplorerContext', value: MalvernTabbedExplorerContext },
     ]
   },
   {
