@@ -38,40 +38,28 @@ import * as ArticleHorizontalCard from 'src/components/non-sitecore/search/Artic
 import * as ArticleCard from 'src/components/non-sitecore/search/ArticleCard';
 import * as NavigationIcons from 'src/components/navigation-icons/NavigationIcons';
 import * as Navigation from 'src/components/navigation/Navigation';
-import * as TrustedLogosSection from 'src/components/malvern/TrustedLogosSection';
-import * as TrustedLogoCard from 'src/components/malvern/TrustedLogoCard';
-import * as TitleAndDescriptionCard from 'src/components/malvern/TitleAndDescriptionCard';
-import * as TestimonialCarouselSection from 'src/components/malvern/TestimonialCarouselSection';
-import * as TestimonialCard from 'src/components/malvern/TestimonialCard';
-import * as TabsSection from 'src/components/malvern/TabsSection';
-import * as TabCard from 'src/components/malvern/TabCard';
-import * as TabBenefitCard from 'src/components/malvern/TabBenefitCard';
-import * as ServicesSection from 'src/components/malvern/ServicesSection';
-import * as ServiceCard from 'src/components/malvern/ServiceCard';
-import * as SearchFilterSection from 'src/components/malvern/SearchFilterSection';
-import * as PromoCtaSection from 'src/components/malvern/PromoCtaSection';
-import * as Newsletter from 'src/components/malvern/Newsletter';
-import * as Logo from 'src/components/malvern/Logo';
-import * as LoginSection from 'src/components/malvern/LoginSection';
-import * as HeroSection from 'src/components/malvern/HeroSection';
-import * as HeaderSection from 'src/components/malvern/HeaderSection';
-import * as FooterSection from 'src/components/malvern/FooterSection';
-import * as FaqSection from 'src/components/malvern/FaqSection';
-import * as FaqCard from 'src/components/malvern/FaqCard';
-import * as CtaSection from 'src/components/malvern/CtaSection';
-import * as CtaLinkCard from 'src/components/malvern/CtaLinkCard';
-import * as CtaBarSection from 'src/components/malvern/CtaBarSection';
-import * as ContentImageSection from 'src/components/malvern/ContentImageSection';
-import * as ContentBlockSection from 'src/components/malvern/ContentBlockSection';
-import * as ContactFormSection from 'src/components/malvern/ContactFormSection';
-import * as CaseStudySection from 'src/components/malvern/CaseStudySection';
-import * as BusinessSizeSection from 'src/components/malvern/BusinessSizeSection';
-import * as BusinessSizeCard from 'src/components/malvern/BusinessSizeCard';
-import * as BenefitsSection from 'src/components/malvern/BenefitsSection';
-import * as BenefitCard from 'src/components/malvern/BenefitCard';
-import * as AwardsSection from 'src/components/malvern/AwardsSection';
-import * as ArticlesCarouselSection from 'src/components/malvern/ArticlesCarouselSection';
-import * as AdpArticleCard from 'src/components/malvern/AdpArticleCard';
+import * as MalvernValuePropsSection from 'src/components/malvern/MalvernValuePropsSection';
+import * as MalvernValuePropCard from 'src/components/malvern/MalvernValuePropCard';
+import * as MalvernTabExplorerCard from 'src/components/malvern/MalvernTabExplorerCard';
+import * as MalvernTabbedExplorerSection from 'src/components/malvern/MalvernTabbedExplorerSection';
+import * as MalvernStayConnectedSection from 'src/components/malvern/MalvernStayConnectedSection';
+import * as MalvernSearchInsightsSection from 'src/components/malvern/MalvernSearchInsightsSection';
+import * as MalvernPromoFeatureCard from 'src/components/malvern/MalvernPromoFeatureCard';
+import * as MalvernProductCategoryCard from 'src/components/malvern/MalvernProductCategoryCard';
+import * as MalvernProductCategoriesSection from 'src/components/malvern/MalvernProductCategoriesSection';
+import * as MalvernProductCarouselSection from 'src/components/malvern/MalvernProductCarouselSection';
+import * as MalvernProductCard from 'src/components/malvern/MalvernProductCard';
+import * as MalvernNavigation from 'src/components/malvern/MalvernNavigation';
+import * as MalvernHeroSection from 'src/components/malvern/MalvernHeroSection';
+import * as MalvernHelpLinksSection from 'src/components/malvern/MalvernHelpLinksSection';
+import * as MalvernHeaderSection from 'src/components/malvern/MalvernHeaderSection';
+import * as MalvernFooterSection from 'src/components/malvern/MalvernFooterSection';
+import * as MalvernDualFeatureSection from 'src/components/malvern/MalvernDualFeatureSection';
+import * as MalvernDigitalSolutionsSection from 'src/components/malvern/MalvernDigitalSolutionsSection';
+import * as MalvernCommunitySection from 'src/components/malvern/MalvernCommunitySection';
+import * as MalvernCommunityCard from 'src/components/malvern/MalvernCommunityCard';
+import * as MalvernArticleRowCard from 'src/components/malvern/MalvernArticleRowCard';
+import * as MalvernArticleListSection from 'src/components/malvern/MalvernArticleListSection';
 import * as LinkList from 'src/components/link-list/LinkList';
 import * as LanguageSwitcher from 'src/components/language-switcher/LanguageSwitcher';
 import * as Image from 'src/components/image/Image';
@@ -87,6 +75,40 @@ import * as Breadcrumb from 'src/components/breadcrumb/Breadcrumb';
 import * as ArticleListing from 'src/components/article-listing/ArticleListing';
 import * as ArticleDetails from 'src/components/article-details/ArticleDetails';
 import * as AllProductsCarousel from 'src/components/all-products-carousel/AllProductsCarousel';
+import * as TrustedLogosSection from 'src/components/adp/TrustedLogosSection';
+import * as TrustedLogoCard from 'src/components/adp/TrustedLogoCard';
+import * as TitleAndDescriptionCard from 'src/components/adp/TitleAndDescriptionCard';
+import * as TestimonialCarouselSection from 'src/components/adp/TestimonialCarouselSection';
+import * as TestimonialCard from 'src/components/adp/TestimonialCard';
+import * as TabsSection from 'src/components/adp/TabsSection';
+import * as TabCard from 'src/components/adp/TabCard';
+import * as TabBenefitCard from 'src/components/adp/TabBenefitCard';
+import * as ServicesSection from 'src/components/adp/ServicesSection';
+import * as ServiceCard from 'src/components/adp/ServiceCard';
+import * as SearchFilterSection from 'src/components/adp/SearchFilterSection';
+import * as PromoCtaSection from 'src/components/adp/PromoCtaSection';
+import * as Newsletter from 'src/components/adp/Newsletter';
+import * as Logo from 'src/components/adp/Logo';
+import * as LoginSection from 'src/components/adp/LoginSection';
+import * as HeroSection from 'src/components/adp/HeroSection';
+import * as HeaderSection from 'src/components/adp/HeaderSection';
+import * as FooterSection from 'src/components/adp/FooterSection';
+import * as FaqSection from 'src/components/adp/FaqSection';
+import * as FaqCard from 'src/components/adp/FaqCard';
+import * as CtaSection from 'src/components/adp/CtaSection';
+import * as CtaLinkCard from 'src/components/adp/CtaLinkCard';
+import * as CtaBarSection from 'src/components/adp/CtaBarSection';
+import * as ContentImageSection from 'src/components/adp/ContentImageSection';
+import * as ContentBlockSection from 'src/components/adp/ContentBlockSection';
+import * as ContactFormSection from 'src/components/adp/ContactFormSection';
+import * as CaseStudySection from 'src/components/adp/CaseStudySection';
+import * as BusinessSizeSection from 'src/components/adp/BusinessSizeSection';
+import * as BusinessSizeCard from 'src/components/adp/BusinessSizeCard';
+import * as BenefitsSection from 'src/components/adp/BenefitsSection';
+import * as BenefitCard from 'src/components/adp/BenefitCard';
+import * as AwardsSection from 'src/components/adp/AwardsSection';
+import * as ArticlesCarouselSection from 'src/components/adp/ArticlesCarouselSection';
+import * as AdpArticleCard from 'src/components/adp/AdpArticleCard';
 
 export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['BYOCWrapper', BYOCWrapper],
@@ -126,6 +148,43 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ArticleCard', { ...ArticleCard }],
   ['NavigationIcons', { ...NavigationIcons }],
   ['Navigation', { ...Navigation, componentType: 'client' }],
+  ['MalvernValuePropsSection', { ...MalvernValuePropsSection, componentType: 'client' }],
+  ['MalvernValuePropCard', { ...MalvernValuePropCard, componentType: 'client' }],
+  ['MalvernTabExplorerCard', { ...MalvernTabExplorerCard, componentType: 'client' }],
+  ['MalvernTabbedExplorerSection', { ...MalvernTabbedExplorerSection, componentType: 'client' }],
+  ['MalvernStayConnectedSection', { ...MalvernStayConnectedSection, componentType: 'client' }],
+  ['MalvernSearchInsightsSection', { ...MalvernSearchInsightsSection, componentType: 'client' }],
+  ['MalvernPromoFeatureCard', { ...MalvernPromoFeatureCard, componentType: 'client' }],
+  ['MalvernProductCategoryCard', { ...MalvernProductCategoryCard, componentType: 'client' }],
+  ['MalvernProductCategoriesSection', { ...MalvernProductCategoriesSection, componentType: 'client' }],
+  ['MalvernProductCarouselSection', { ...MalvernProductCarouselSection, componentType: 'client' }],
+  ['MalvernProductCard', { ...MalvernProductCard, componentType: 'client' }],
+  ['MalvernNavigation', { ...MalvernNavigation, componentType: 'client' }],
+  ['MalvernHeroSection', { ...MalvernHeroSection, componentType: 'client' }],
+  ['MalvernHelpLinksSection', { ...MalvernHelpLinksSection, componentType: 'client' }],
+  ['MalvernHeaderSection', { ...MalvernHeaderSection, componentType: 'client' }],
+  ['MalvernFooterSection', { ...MalvernFooterSection, componentType: 'client' }],
+  ['MalvernDualFeatureSection', { ...MalvernDualFeatureSection, componentType: 'client' }],
+  ['MalvernDigitalSolutionsSection', { ...MalvernDigitalSolutionsSection, componentType: 'client' }],
+  ['MalvernCommunitySection', { ...MalvernCommunitySection, componentType: 'client' }],
+  ['MalvernCommunityCard', { ...MalvernCommunityCard, componentType: 'client' }],
+  ['MalvernArticleRowCard', { ...MalvernArticleRowCard, componentType: 'client' }],
+  ['MalvernArticleListSection', { ...MalvernArticleListSection, componentType: 'client' }],
+  ['LinkList', { ...LinkList }],
+  ['LanguageSwitcher', { ...LanguageSwitcher, componentType: 'client' }],
+  ['Image', { ...Image }],
+  ['HeroBanner', { ...HeroBanner }],
+  ['Header', { ...Header }],
+  ['Footer', { ...Footer }],
+  ['Features', { ...Features }],
+  ['ContentBlock', { ...ContentBlock }],
+  ['Container', { ...Container }],
+  ['ContactForm', { ...ContactForm, componentType: 'client' }],
+  ['ColumnSplitter', { ...ColumnSplitter }],
+  ['Breadcrumb', { ...Breadcrumb }],
+  ['ArticleListing', { ...ArticleListing }],
+  ['ArticleDetails', { ...ArticleDetails }],
+  ['AllProductsCarousel', { ...AllProductsCarousel }],
   ['TrustedLogosSection', { ...TrustedLogosSection, componentType: 'client' }],
   ['TrustedLogoCard', { ...TrustedLogoCard, componentType: 'client' }],
   ['TitleAndDescriptionCard', { ...TitleAndDescriptionCard, componentType: 'client' }],
@@ -160,21 +219,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['AwardsSection', { ...AwardsSection, componentType: 'client' }],
   ['ArticlesCarouselSection', { ...ArticlesCarouselSection, componentType: 'client' }],
   ['AdpArticleCard', { ...AdpArticleCard, componentType: 'client' }],
-  ['LinkList', { ...LinkList }],
-  ['LanguageSwitcher', { ...LanguageSwitcher, componentType: 'client' }],
-  ['Image', { ...Image }],
-  ['HeroBanner', { ...HeroBanner }],
-  ['Header', { ...Header }],
-  ['Footer', { ...Footer }],
-  ['Features', { ...Features }],
-  ['ContentBlock', { ...ContentBlock }],
-  ['Container', { ...Container }],
-  ['ContactForm', { ...ContactForm, componentType: 'client' }],
-  ['ColumnSplitter', { ...ColumnSplitter }],
-  ['Breadcrumb', { ...Breadcrumb }],
-  ['ArticleListing', { ...ArticleListing }],
-  ['ArticleDetails', { ...ArticleDetails }],
-  ['AllProductsCarousel', { ...AllProductsCarousel }],
 ]);
 
 export default componentMap;

@@ -21,7 +21,7 @@ import ProductCarousel from 'src/components/non-sitecore/ProductCarousel';
 import { CommonStyles, LayoutStyles, PromoFlags, HeroBannerStyles } from '@/types/styleFlags';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation, A11y, Keyboard } from 'swiper/modules';
-import { ArrowRight, ChevronLeft, ChevronRight, ChevronDown, Heart, Plus, Star, User, X, Check, Loader2, LoaderCircle, ShoppingCart, Search, Phone, Menu, Globe, MoreHorizontal, Home } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, ChevronDown, Heart, Plus, Star, User, X, Check, Loader2, LoaderCircle, ShoppingCart, Search, Menu, Globe, MoreHorizontal, Home, Phone } from 'lucide-react';
 import Link_a258c208ba01265ca0aa9c7abae745cc7141aa63 from 'next/link';
 import { cn } from '@/shadcn/lib/utils';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -221,11 +221,11 @@ const importMap = [
       { name: 'LoaderCircle', value: LoaderCircle },
       { name: 'ShoppingCart', value: ShoppingCart },
       { name: 'Search', value: Search },
-      { name: 'Phone', value: Phone },
       { name: 'Menu', value: Menu },
       { name: 'Globe', value: Globe },
       { name: 'MoreHorizontal', value: MoreHorizontal },
       { name: 'Home', value: Home },
+      { name: 'Phone', value: Phone },
     ]
   },
   {
