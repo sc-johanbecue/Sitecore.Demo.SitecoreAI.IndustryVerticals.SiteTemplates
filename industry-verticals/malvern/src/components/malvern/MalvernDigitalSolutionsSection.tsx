@@ -1,6 +1,6 @@
 'use client';
 
-import React, { type JSX } from 'react';
+import type { JSX } from 'react';
 import {
   TextField,
   RichTextField,
@@ -12,11 +12,12 @@ import {
   Link as SitecoreLink,
 } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
-import { ChevronRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 /**
  * MalvernDigitalSolutionsSection
- * Split banner: instrument image left, light-blue content panel right (adp ContentImageSection-style split).
+ * Desktop: 50/50 image | pale cyan copy, flush seam, chamfered bottom-right on the copy panel.
+ * Mobile: image on top (~40–45% height), copy below with bottom-left rounded and same chamfer.
  */
 
 interface Fields {
@@ -28,17 +29,23 @@ interface Fields {
 }
 
 const defaultFields: Fields = {
-  Heading: { value: 'The next generation of instrument management is here' },
+  Heading: {
+    value: 'Your new solution for unattended high-throughput XRD analysis',
+  },
   Content: {
     value:
-      '<p>Omnian software brings together your instruments, data, and workflows so your team spends less time on administration and more time on science.</p>',
+      '<p>With over 60 sample positions, the Aeris High-Capacity Sample Changer brings innovative, automated, round-the-clock analysis to your high-throughput environment, cutting operator workload by up to 50%</p>',
   },
-  LinkText: { value: 'Learn more' },
-  Link: { value: { href: '/solutions/software' } },
+  LinkText: { value: 'Find out more' },
+  Link: { value: { href: '/solutions/aeris' } },
   Image: {
-    value: { src: '/images/malvern-digital-solutions.jpg', alt: 'Instrument management' },
+    value: { src: '/images/malvern-digital-solutions.jpg', alt: 'Aeris XRD in the lab' },
   },
 };
+
+/** 45° chamfer at bottom-right; keep other edges square so outer overflow can round BL (mobile) and TR (desktop). */
+const contentClip =
+  '[clip-path:polygon(0_0,100%_0,100%_calc(100%-2.25rem),calc(100%-2.25rem)_100%,0_100%)]';
 
 export type MalvernDigitalSolutionsSectionProps = ComponentProps & {
   fields: Fields;
@@ -47,46 +54,59 @@ export type MalvernDigitalSolutionsSectionProps = ComponentProps & {
 export const Default = (props: MalvernDigitalSolutionsSectionProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
   const { styles } = props.params;
-  const fields = props.fields || defaultFields;
+  const fields = { ...defaultFields, ...(props.fields || {}) } as Fields;
 
   return (
     <section
-      className={`component malvern-digital-solutions-section overflow-hidden bg-white py-12 lg:py-16 ${styles || ''}`}
+      className={`component malvern-digital-solutions-section bg-white py-12 lg:py-16 ${styles || ''}`}
       id={id}
     >
       <div className="mx-auto max-w-7xl px-4">
-        <div className="flex flex-col lg:flex-row lg:items-stretch">
-          <div className="relative min-h-[220px] flex-1 lg:min-h-[360px] lg:max-w-[48%]">
+        <div className="malvern-digital-solutions-tile flex flex-col overflow-hidden lg:flex-row">
+          <div className="relative w-full max-md:h-[clamp(11rem,42vmin,20rem)] max-md:min-h-44 max-md:shrink-0 max-md:overflow-hidden max-md:rounded-t-2xl lg:h-auto lg:min-h-80 lg:w-1/2 lg:overflow-hidden lg:rounded-bl-2xl lg:rounded-tl-2xl xl:min-h-88">
             <SitecoreImage
               field={fields.Image}
-              className="h-full w-full object-cover lg:absolute lg:inset-0"
+              className="h-full w-full object-cover object-center"
             />
           </div>
-          <div className="relative z-[1] -mt-6 flex flex-1 items-center bg-[#c5e8f0] px-6 py-10 shadow-lg lg:mt-0 lg:-ml-10 lg:max-w-[58%] lg:self-center lg:px-12 lg:py-14">
-            <div className="malvern-digital-solutions-content w-full">
+
+          <div className="overflow-hidden rounded-bl-2xl lg:w-1/2 lg:rounded-bl-none lg:rounded-tr-2xl">
+            <div
+              className={`malvern-digital-solutions-content flex flex-col justify-center bg-[#c5e8f0] px-7 py-10 sm:px-9 sm:py-11 lg:min-h-80 lg:px-10 lg:py-12 xl:min-h-88 xl:px-12 xl:py-14 ${contentClip}`}
+            >
               <Text
                 tag="h2"
                 field={fields.Heading}
-                className="mb-4 text-2xl leading-tight font-bold text-[#00333d] lg:text-3xl"
+                className="mb-4 text-2xl leading-[1.2] font-bold tracking-tight text-[#1a1a1a] sm:mb-5 sm:text-[1.625rem] lg:mb-5 lg:text-[1.75rem] xl:text-[1.875rem]"
               />
-              <RichText
-                field={fields.Content}
-                className="mb-6 text-base leading-relaxed text-[#1a2b2f] lg:text-lg"
-              />
+              <div className="malvern-digital-solutions-body mb-7 text-base leading-relaxed text-[#3d4d52] sm:mb-8 lg:mb-8 lg:text-lg">
+                <RichText field={fields.Content} />
+              </div>
               <SitecoreLink
                 field={fields.Link}
-                className="inline-flex items-center gap-1 text-sm font-semibold text-[#00333d] hover:text-[#00A651]"
+                className="malvern-digital-solutions-cta inline-flex w-fit items-center gap-2 text-base font-semibold text-[#0a7a8c] no-underline transition-colors hover:text-[#065f6e]"
               >
+                <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={1.75} aria-hidden />
                 <Text tag="span" field={fields.LinkText} className="inline" />
-                <ChevronRight className="h-4 w-4" />
               </SitecoreLink>
             </div>
           </div>
         </div>
       </div>
+
       <style jsx>{`
-        .malvern-digital-solutions-content :global(a) {
-          color: #00a651;
+        .malvern-digital-solutions-body :global(p) {
+          margin: 0 0 0.75rem 0;
+        }
+        .malvern-digital-solutions-body :global(p:last-child) {
+          margin-bottom: 0;
+        }
+        .malvern-digital-solutions-body :global(a) {
+          color: #0a7a8c;
+          text-decoration: underline;
+        }
+        .malvern-digital-solutions-body :global(a:hover) {
+          color: #065f6e;
         }
       `}</style>
     </section>
