@@ -4,9 +4,14 @@ import client from 'lib/sitecore-client';
 /**
  * Must match what your Auth0 Action sets as a custom claim on the ID token
  */
-const AUTH0_BASE_URL = process.env.AUTH0_BASE_URL?.replace(/\/+$/, '');
-export const ENTITLEMENTS_CLAIM = `${AUTH0_BASE_URL}/entitlements`;
-export const ROLES_CLAIM = `${AUTH0_BASE_URL}/roles`;
+/** Must match Auth0 Action custom claim namespace (do not use AUTH0_BASE_URL; Vercel app URL ≠ claim namespace). */
+const AUTH0_CLAIMS_NAMESPACE = (
+  process.env.NEXT_PUBLIC_AUTH0_CLAIMS_NAMESPACE ||
+  process.env.AUTH0_CLAIMS_NAMESPACE ||
+  'https://adp-portal.vercel.app'
+).replace(/\/+$/, '');
+export const ENTITLEMENTS_CLAIM = `${AUTH0_CLAIMS_NAMESPACE}/entitlements`;
+export const ROLES_CLAIM = `${AUTH0_CLAIMS_NAMESPACE}/roles`;
 
 /** Role that bypasses all entitlement checks (user can see everything). Must match Auth0 role name. */
 export const ADP_EMPLOYEE_ROLE = 'ADP Employee';

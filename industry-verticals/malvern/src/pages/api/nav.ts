@@ -3,7 +3,12 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from '@auth0/nextjs-auth0';
 
 import client from 'lib/sitecore-client';
-import { getEntitlementsFromSession, getRolesFromSession } from 'lib/entitlements';
+import {
+  ENTITLEMENTS_CLAIM,
+  getEntitlementsFromSession,
+  getRolesFromSession,
+  ROLES_CLAIM,
+} from 'lib/entitlements';
 import { getNavMetadata } from 'lib/nav-metadata';
 import { enrichNavTree, filterNavTree, type NavFields } from 'lib/nav-apply';
 import { getNavigationFieldsFromLayout, setNavigationFieldsOnLayout } from 'lib/nav-layout';
@@ -85,12 +90,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         roles: userRoles,
         entitlementCount: enabledEntitlements.length,
         entitlements: enabledEntitlements,
-        expectedEntitlementsClaim: process.env.AUTH0_BASE_URL
-          ? `${process.env.AUTH0_BASE_URL.replace(/\/+$/, '')}/entitlements`
-          : undefined,
-        expectedRolesClaim: process.env.AUTH0_BASE_URL
-          ? `${process.env.AUTH0_BASE_URL.replace(/\/+$/, '')}/roles`
-          : undefined,
+        expectedEntitlementsClaim: ENTITLEMENTS_CLAIM,
+        expectedRolesClaim: ROLES_CLAIM,
         claimKeyHints,
         claimKeyCount: claimKeys.length,
       });
