@@ -3,7 +3,8 @@
 import React, { type JSX } from 'react';
 import {
   TextField,
-  Text,
+  RichText,
+  RichTextField,
   ImageField,
   Image as SitecoreImage,
   LinkField,
@@ -32,8 +33,7 @@ interface Fields {
   InstagramLink: LinkField;
   LegalLink: LinkField;
   CookieLink: LinkField;
-  PrivacyLink: LinkField;
-  CopyrightText: TextField;
+  CopyrightText: RichTextField;
 }
 
 const defaultFields: Fields = {
@@ -51,7 +51,6 @@ const defaultFields: Fields = {
   InstagramLink: { value: { href: 'https://www.instagram.com/malvernpanalytical' } },
   LegalLink: { value: { href: '/legal', text: 'Legal' } },
   CookieLink: { value: { href: '/cookies', text: 'Cookie policy' } },
-  PrivacyLink: { value: { href: '/privacy', text: 'Privacy policy' } },
   CopyrightText: {
     value: '© 2026 Malvern Panalytical Limited. All rights reserved.',
   },
@@ -72,13 +71,13 @@ export const Default = (props: MalvernFooterSectionProps): JSX.Element => {
   const phKeyFour = `malvern-footer-col-4-${DynamicPlaceholderId}`;
 
   const sectionDefs = [
-    { key: 'col1' as const, titleField: fields.TitleOne, ph: phKeyOne },
-    { key: 'col2' as const, titleField: fields.TitleTwo, ph: phKeyTwo },
-    { key: 'col3' as const, titleField: fields.TitleThree, ph: phKeyThree },
-    { key: 'col4' as const, titleField: fields.TitleFour, ph: phKeyFour },
+    { key: 'col1' as const, ph: phKeyOne },
+    { key: 'col2' as const, ph: phKeyTwo },
+    { key: 'col3' as const, ph: phKeyThree },
+    { key: 'col4' as const, ph: phKeyFour },
   ];
 
-  const socialLinkClass = 'text-white/80 transition-colors hover:text-[#00A651]';
+  const socialLinkClass = 'text-white/80 transition-colors hover:text-[#47bcd3]';
 
   return (
     <footer
@@ -87,14 +86,9 @@ export const Default = (props: MalvernFooterSectionProps): JSX.Element => {
     >
       <div className="mx-auto max-w-7xl px-4 py-12 lg:py-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {sectionDefs.map(({ key, titleField, ph }) => (
+          {sectionDefs.map(({ key, ph }) => (
             <div key={key} className="malvern-footer-column">
-              <Text
-                tag="h3"
-                field={titleField}
-                className="mb-4 text-sm font-bold tracking-wide text-white"
-              />
-              <div className="flex flex-col gap-2 text-sm text-white/85 [&_a]:text-white/85 [&_a:hover]:text-[#00A651]">
+              <div className="flex flex-col gap-2 text-sm text-white/85 [&_a]:text-white/85 [&_a:hover]:text-[#47bcd3]">
                 <Placeholder name={ph} rendering={props.rendering} />
               </div>
             </div>
@@ -152,13 +146,6 @@ export const Default = (props: MalvernFooterSectionProps): JSX.Element => {
               </SitecoreLink>
             </div>
           </div>
-
-          <div className="flex flex-col items-start gap-2 lg:items-end">
-            <div className="flex items-center gap-3">
-              <SitecoreImage field={fields.SpectrisLogo} className="h-8 w-auto opacity-90" />
-              <Text tag="span" field={fields.SubBrandText} className="text-xs text-white/70" />
-            </div>
-          </div>
         </div>
       </div>
 
@@ -168,10 +155,8 @@ export const Default = (props: MalvernFooterSectionProps): JSX.Element => {
             <SitecoreLink field={fields.LegalLink} className="hover:text-white hover:underline" />
             <span className="text-white/30">|</span>
             <SitecoreLink field={fields.CookieLink} className="hover:text-white hover:underline" />
-            <span className="text-white/30">|</span>
-            <SitecoreLink field={fields.PrivacyLink} className="hover:text-white hover:underline" />
           </div>
-          <Text tag="p" field={fields.CopyrightText} className="max-w-prose sm:text-right" />
+          <RichText field={fields.CopyrightText} className="max-w-prose sm:text-right" />
         </div>
       </div>
     </footer>

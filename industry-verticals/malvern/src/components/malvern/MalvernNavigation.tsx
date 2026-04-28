@@ -308,7 +308,7 @@ export const Default = ({ params, fields }: NavigationProps) => {
     <div className={`component navigation bg-background ${styles}`} id={id}>
       <div
         className={clsx(
-          'relative z-150 container flex items-center py-4 lg:hidden',
+          'relative z-150 container flex items-center py-3.5 lg:hidden',
           !isSimpleLayout &&
             '[.component.header_&]:grid-cols-2 [.component.header_&]:px-0 [.component.header_&]:max-lg:grid',
           !isSimpleLayout ? 'flex-row-reverse' : '',
@@ -354,7 +354,7 @@ export const Default = ({ params, fields }: NavigationProps) => {
           role="menubar"
           className={clsx(
             // Mobile: center items; Desktop: align items from the left.
-            'container flex flex-col gap-x-4 gap-y-4 py-6 text-[10px] lg:flex-row xl:gap-x-4',
+            'container flex flex-col gap-x-4 gap-y-4 py-6 text-[10px] lg:flex-row lg:py-5 xl:gap-x-4',
             'max-lg:items-center max-lg:justify-center lg:items-center lg:justify-start',
             isSimpleLayout && !hasLogoRootItem && 'lg:justify-end'
           )}

@@ -56,6 +56,7 @@ import * as MalvernHeroSection from 'src/components/malvern/MalvernHeroSection';
 import * as MalvernHelpLinksSection from 'src/components/malvern/MalvernHelpLinksSection';
 import * as MalvernHeaderSection from 'src/components/malvern/MalvernHeaderSection';
 import * as MalvernFooterSection from 'src/components/malvern/MalvernFooterSection';
+import * as MalvernFooterLinkList from 'src/components/malvern/MalvernFooterLinkList';
 import * as MalvernDualFeatureSection from 'src/components/malvern/MalvernDualFeatureSection';
 import * as MalvernDigitalSolutionsSection from 'src/components/malvern/MalvernDigitalSolutionsSection';
 import * as MalvernCommunitySection from 'src/components/malvern/MalvernCommunitySection';
@@ -168,6 +169,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['MalvernHelpLinksSection', { ...MalvernHelpLinksSection, componentType: 'client' }],
   ['MalvernHeaderSection', { ...MalvernHeaderSection, componentType: 'client' }],
   ['MalvernFooterSection', { ...MalvernFooterSection, componentType: 'client' }],
+  ['MalvernFooterLinkList', { ...MalvernFooterLinkList }],
   ['MalvernDualFeatureSection', { ...MalvernDualFeatureSection, componentType: 'client' }],
   ['MalvernDigitalSolutionsSection', { ...MalvernDigitalSolutionsSection, componentType: 'client' }],
   ['MalvernCommunitySection', { ...MalvernCommunitySection, componentType: 'client' }],
