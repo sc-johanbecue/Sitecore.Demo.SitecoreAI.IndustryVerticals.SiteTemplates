@@ -4,8 +4,12 @@ import client from 'lib/sitecore-client';
 /**
  * Must match what your Auth0 Action sets as a custom claim on the ID token
  */
-export const ENTITLEMENTS_CLAIM = 'https://adp-portal.vercel.app/entitlements';
-export const ROLES_CLAIM = 'https://adp-portal.vercel.app/roles';
+const AUTH0_BASE_URL = (process.env.AUTH0_BASE_URL || 'https://adp-portal.vercel.app').replace(
+  /\/+$/,
+  ''
+);
+export const ENTITLEMENTS_CLAIM = `${AUTH0_BASE_URL}/entitlements`;
+export const ROLES_CLAIM = `${AUTH0_BASE_URL}/roles`;
 
 /** Role that bypasses all entitlement checks (user can see everything). Must match Auth0 role name. */
 export const ADP_EMPLOYEE_ROLE = 'ADP Employee';
@@ -20,8 +24,10 @@ const ROLES_FIELD = 'Roles';
 const ROLES_OPERATOR_FIELD = 'RolesOperator';
 
 /** EntitlementOperator/RolesOperator droplink values (normalized GUIDs) */
-export const ENTITLEMENT_OPERATOR_ANY = '95926502e2494b2890f7cebf2f744d53';
-export const ENTITLEMENT_OPERATOR_ALL = 'f37eb6e90ccf4ff7968234425fc36dfb';
+const ENTITLEMENT_OPERATOR_ANY_RAW = '{EFE6A32D-8E1F-476E-8AE2-DA5D249E0631}';
+const ENTITLEMENT_OPERATOR_ALL_RAW = '{AFF74255-63A6-4C77-9890-079B31535FA5}';
+export const ENTITLEMENT_OPERATOR_ANY = normalizeGuid(ENTITLEMENT_OPERATOR_ANY_RAW);
+export const ENTITLEMENT_OPERATOR_ALL = normalizeGuid(ENTITLEMENT_OPERATOR_ALL_RAW);
 
 export type EntitlementOperator = 'any' | 'all';
 
