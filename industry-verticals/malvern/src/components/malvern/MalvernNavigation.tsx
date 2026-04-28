@@ -7,7 +7,6 @@ import { ChevronDown } from 'lucide-react';
 import HamburgerIcon from '@/components/non-sitecore/HamburgerIcon';
 import { useClickAway } from '@/hooks/useClickAway';
 import { useStopResponsiveTransition } from '@/hooks/useStopResponsiveTransition';
-import { extractMediaUrl } from '@/helpers/extractMediaUrl';
 import {
   getLinkContent,
   getLinkField,
@@ -18,10 +17,6 @@ import {
 import clsx from 'clsx';
 import { isParamEnabled } from '@/helpers/isParamEnabled';
 
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { ENTITLEMENTS_CLAIM } from 'lib/entitlements';
-import type { EntitlementOperator } from 'lib/entitlements';
-
 export interface NavItemFields {
   Id: string;
   DisplayName: string;
@@ -31,14 +26,11 @@ export interface NavItemFields {
   Querystring: string;
   Children?: Array<NavItemFields>;
   Styles: string[];
-  __requiredAuth0Keys?: string[];
-  __requiredAuth0Operator?: EntitlementOperator;
 }
 
 interface NavigationListItemProps {
   fields: NavItemFields;
   handleClick: (event?: React.MouseEvent<HTMLElement>) => void;
-  logoSrc?: string;
   isSimpleLayout?: boolean;
 }
 
@@ -46,38 +38,9 @@ export interface NavigationProps extends ComponentProps {
   fields: Record<string, NavItemFields>;
 }
 
-function userHasRequiredKeys(
-  requiredKeys: string[],
-  userEntitlements: Record<string, boolean>,
-  operator: EntitlementOperator
-) {
-  if (!requiredKeys?.length) return true;
-  return operator === 'all'
-    ? requiredKeys.every((k) => userEntitlements[k] === true)
-    : requiredKeys.some((k) => userEntitlements[k] === true);
-}
-
-function filterNavTreeClient(items: NavItemFields[], userEntitlements: Record<string, boolean>) {
-  const filterRec = (arr: NavItemFields[]): NavItemFields[] => {
-    const out: NavItemFields[] = [];
-    for (const it of arr) {
-      const required = it.__requiredAuth0Keys || [];
-      const operator = it.__requiredAuth0Operator ?? 'any';
-      if (!userHasRequiredKeys(required, userEntitlements, operator)) continue;
-
-      const next: NavItemFields = { ...it };
-      if (next.Children?.length) next.Children = filterRec(next.Children);
-      out.push(next);
-    }
-    return out;
-  };
-  return filterRec(items);
-}
-
 const NavigationListItem: React.FC<NavigationListItemProps> = ({
   fields,
   handleClick,
-  logoSrc,
   isSimpleLayout,
 }) => {
   const { page } = useSitecore();
@@ -90,7 +53,6 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
   const isTopLevelPage = isNavLevel(fields, 1);
 
   const hasChildren = !!fields.Children?.length;
-  const isLogoRootItem = isRootItem && logoSrc;
   const hasDropdownMenu = hasChildren && isTopLevelPage;
 
   const clickHandler = (event: React.MouseEvent<HTMLElement>) => {
@@ -105,7 +67,6 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
           fields={child}
           handleClick={clickHandler}
           isSimpleLayout={isSimpleLayout}
-          logoSrc={logoSrc}
         />
       ))
     : null;
@@ -117,7 +78,6 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
     console.log('[NAV ITEM]', {
       id: fields.Id,
       href: fields.Href,
-      req: fields.__requiredAuth0Keys,
     });
 
   return (
@@ -128,9 +88,7 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
       className={clsx(
         fields?.Styles?.join(' '),
         'relative flex flex-col gap-x-8 gap-y-4 xl:gap-x-14',
-        isRootItem && 'lg:flex-row',
-        isLogoRootItem && 'shrink-0 max-lg:hidden',
-        isLogoRootItem && isSimpleLayout && 'lg:mr-auto'
+        isRootItem && 'lg:flex-row'
       )}
     >
       <div className="flex items-center justify-center">
@@ -140,7 +98,7 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
           onClick={clickHandler}
           className="hover:text-foreground-light text-[12px] whitespace-nowrap transition-colors"
         >
-          {getLinkContent(fields, logoSrc)}
+          {getLinkContent(fields)}
         </Link>
 
         {hasDropdownMenu && (
@@ -197,9 +155,8 @@ export const Default = ({ params, fields }: NavigationProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { page } = useSitecore();
   const isEditingOrPreview = page.mode.isEditing || page.mode.isPreview;
-  const { user } = useUser();
 
-  const { styles, RenderingIdentifier: id, Logo: logoImage, SimpleLayout: simpleLayout } = params;
+  const { styles, RenderingIdentifier: id, SimpleLayout: simpleLayout } = params;
 
   useStopResponsiveTransition();
 
@@ -215,31 +172,15 @@ export const Default = ({ params, fields }: NavigationProps) => {
   };
 
   const isSimpleLayout = isParamEnabled(simpleLayout);
-  const logoSrc = extractMediaUrl(logoImage);
-
-  const userEntitlements = useMemo<Record<string, boolean>>(() => {
-    const claim = user?.[ENTITLEMENTS_CLAIM] as unknown;
-    if (claim && typeof claim === 'object' && !Array.isArray(claim)) {
-      return claim as Record<string, boolean>;
-    }
-    return {};
-  }, [user]);
 
   const filteredFields = useMemo(() => {
     const prepared = prepareFields(baseFields, !isSimpleLayout);
     const list = Object.values(prepared).filter(Boolean) as NavItemFields[];
 
-    if (isEditingOrPreview) {
-      const record: Record<string, NavItemFields> = {};
-      list.forEach((it, idx) => (record[String(idx)] = it));
-      return record;
-    }
-
-    const filteredList = filterNavTreeClient(list, userEntitlements);
     const record: Record<string, NavItemFields> = {};
-    filteredList.forEach((it, idx) => (record[String(idx)] = it));
+    list.forEach((it, idx) => (record[String(idx)] = it));
     return record;
-  }, [userEntitlements, baseFields, isSimpleLayout, isEditingOrPreview]);
+  }, [baseFields, isSimpleLayout]);
 
   /**
    * Refresh nav during long sessions so newly published items appear.
@@ -249,21 +190,36 @@ export const Default = ({ params, fields }: NavigationProps) => {
     if (isEditingOrPreview) return;
 
     let cancelled = false;
+    const debug =
+      typeof window !== 'undefined' &&
+      new URLSearchParams(window.location.search).get('navdebug') === '1';
 
     const refresh = async () => {
       try {
         const locale = (page as unknown as { locale?: string })?.locale || 'en';
-        const res = await fetch(`/api/nav?locale=${encodeURIComponent(locale)}&editing=0`, {
-          method: 'GET',
-        });
-        if (!res.ok) return;
+        const res = await fetch(
+          `/api/nav?locale=${encodeURIComponent(locale)}&editing=0${debug ? '&navdebug=1' : ''}`,
+          {
+            method: 'GET',
+          }
+        );
+        if (!res.ok) {
+          if (debug) console.warn('[NAV] refresh failed', { status: res.status });
+          return;
+        }
         const json = (await res.json()) as { fields?: Record<string, NavItemFields> };
-        if (!cancelled && json?.fields) {
-          console.log('[NAV] refreshed from /api/nav');
+        const nextCount = json?.fields ? Object.keys(json.fields).length : 0;
+        if (!cancelled && json?.fields && nextCount > 0) {
+          if (debug) {
+            console.log('[NAV] refreshed from /api/nav', { count: nextCount });
+          }
           setBaseFields(json.fields);
+        } else if (debug) {
+          // Avoid wiping SSR nav with empty API payload while diagnosing upstream filtering/layout issues.
+          console.warn('[NAV] ignored empty nav refresh payload', { nextCount, locale });
         }
       } catch {
-        // ignore
+        if (debug) console.warn('[NAV] refresh threw an exception');
       }
     };
 
@@ -289,8 +245,6 @@ export const Default = ({ params, fields }: NavigationProps) => {
   }
 
   const preparedFields = prepareFields(filteredFields, !isSimpleLayout);
-  const rootItem = Object.values(preparedFields).find((item) => isNavRootItem(item));
-  const hasLogoRootItem = rootItem && logoSrc;
 
   const navigationItems = Object.values(preparedFields)
     .filter((item): item is NavItemFields => !!item)
@@ -299,7 +253,6 @@ export const Default = ({ params, fields }: NavigationProps) => {
         key={item.Id}
         fields={item}
         handleClick={(event) => handleToggleMenu(event, false)}
-        logoSrc={logoSrc}
         isSimpleLayout={!!isSimpleLayout}
       />
     ));
@@ -312,21 +265,9 @@ export const Default = ({ params, fields }: NavigationProps) => {
           !isSimpleLayout &&
             '[.component.header_&]:grid-cols-2 [.component.header_&]:px-0 [.component.header_&]:max-lg:grid',
           !isSimpleLayout ? 'flex-row-reverse' : '',
-          isSimpleLayout && !hasLogoRootItem ? 'justify-end' : ''
+          isSimpleLayout ? 'justify-end' : ''
         )}
       >
-        {hasLogoRootItem && (
-          <Link
-            field={getLinkField(rootItem!)}
-            editable={page.mode.isEditing}
-            className={clsx(
-              'navigation-mobile-trigger',
-              !isSimpleLayout && '[.component.header_&]:mx-auto'
-            )}
-          >
-            {getLinkContent(rootItem!, logoSrc)}
-          </Link>
-        )}
         <HamburgerIcon
           isOpen={isMenuOpen}
           onClick={handleToggleMenu}
@@ -356,7 +297,7 @@ export const Default = ({ params, fields }: NavigationProps) => {
             // Mobile: center items; Desktop: align items from the left.
             'container flex flex-col gap-x-4 gap-y-4 py-6 text-[10px] lg:flex-row lg:py-5 xl:gap-x-4',
             'max-lg:items-center max-lg:justify-center lg:items-center lg:justify-start',
-            isSimpleLayout && !hasLogoRootItem && 'lg:justify-end'
+            isSimpleLayout && 'lg:justify-end'
           )}
         >
           {navigationItems}

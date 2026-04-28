@@ -4,18 +4,15 @@ import client from 'lib/sitecore-client';
 /**
  * Must match what your Auth0 Action sets as a custom claim on the ID token
  */
-const AUTH0_BASE_URL = (process.env.AUTH0_BASE_URL || 'https://adp-portal.vercel.app').replace(
-  /\/+$/,
-  ''
-);
+const AUTH0_BASE_URL = process.env.AUTH0_BASE_URL?.replace(/\/+$/, '');
 export const ENTITLEMENTS_CLAIM = `${AUTH0_BASE_URL}/entitlements`;
 export const ROLES_CLAIM = `${AUTH0_BASE_URL}/roles`;
 
 /** Role that bypasses all entitlement checks (user can see everything). Must match Auth0 role name. */
 export const ADP_EMPLOYEE_ROLE = 'ADP Employee';
 
-/** All entitlement caches use this TTL (max 1 minute). */
-export const ENTITLEMENTS_CACHE_TTL_MS = 1 * 60 * 1000;
+/** All entitlement caches use this TTL. Set to 0 to disable caching. */
+export const ENTITLEMENTS_CACHE_TTL_MS = 0;
 
 // Sitecore field names (must match EXACTLY the field names in Sitecore)
 const ENTITLEMENTS_FIELD = 'Entitlements';
@@ -93,6 +90,7 @@ export function setRequiredKeysForItem(
   roles: string[] = [],
   rolesOperator: EntitlementOperator = 'any'
 ): void {
+  if (ENTITLEMENTS_CACHE_TTL_MS <= 0) return;
   const key = getRequiredKeysCacheKey(itemId, language);
   requiredKeysCache.set(key, {
     value: { keys: [...keys], operator, roles: [...roles], rolesOperator },
@@ -173,8 +171,10 @@ export async function getRequiredAuth0EntitlementKeysForItem(
   const cacheKey = getRequiredKeysCacheKey(itemId, language);
   const now = Date.now();
 
-  const cached = requiredKeysCache.get(cacheKey);
-  if (cached && cached.expiresAt > now) return cached.value;
+  if (ENTITLEMENTS_CACHE_TTL_MS > 0) {
+    const cached = requiredKeysCache.get(cacheKey);
+    if (cached && cached.expiresAt > now) return cached.value;
+  }
 
   if (!hasGetData(client)) {
     throw new Error(
@@ -195,7 +195,9 @@ export async function getRequiredAuth0EntitlementKeysForItem(
   const rolesOperator = extractOperatorFromField(isObject(item) ? item.rolesOperator : undefined);
 
   const entry: RequiredAuthEntry = { keys, operator, roles, rolesOperator };
-  requiredKeysCache.set(cacheKey, { value: entry, expiresAt: now + ENTITLEMENTS_CACHE_TTL_MS });
+  if (ENTITLEMENTS_CACHE_TTL_MS > 0) {
+    requiredKeysCache.set(cacheKey, { value: entry, expiresAt: now + ENTITLEMENTS_CACHE_TTL_MS });
+  }
   return entry;
 }
 
@@ -315,17 +317,21 @@ export function getOrSetAccessDecision(
   const decisionKey = getAccessDecisionCacheKey(itemId, language, userSub, operator, rolesOperator);
   const now = Date.now();
 
-  const cached = accessDecisionCache.get(decisionKey);
-  if (cached && cached.expiresAt > now) return cached.value;
+  if (ENTITLEMENTS_CACHE_TTL_MS > 0) {
+    const cached = accessDecisionCache.get(decisionKey);
+    if (cached && cached.expiresAt > now) return cached.value;
+  }
 
   const entitlementsPass = userHasRequiredKeys(requiredKeys, userEntitlements, operator);
   const rolesPass = userHasRequiredRoles(requiredRoles, userRoles, rolesOperator);
   const allowed = entitlementsPass && rolesPass;
 
-  accessDecisionCache.set(decisionKey, {
-    value: allowed,
-    expiresAt: now + ENTITLEMENTS_CACHE_TTL_MS,
-  });
+  if (ENTITLEMENTS_CACHE_TTL_MS > 0) {
+    accessDecisionCache.set(decisionKey, {
+      value: allowed,
+      expiresAt: now + ENTITLEMENTS_CACHE_TTL_MS,
+    });
+  }
   return allowed;
 }
 

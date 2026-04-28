@@ -58,7 +58,7 @@ function chunk<T>(arr: T[], size: number): T[][] {
 }
 
 function stableKey(language: string, ids: string[], includeEntitlements: boolean) {
-  const sorted = [...new Set(ids)].sort();
+  const sorted = [...new Set(ids.map(normalizeId))].sort();
   return `${language}::${includeEntitlements ? 'withEnt' : 'redirectOnly'}::${sorted.join(',')}`;
 }
 
@@ -171,8 +171,9 @@ export async function getNavMetadata(params: {
 }): Promise<NavMetadata> {
   const { itemIds, language, includeEntitlements = true, debug, traceId } = params;
 
-  const uniqueIds = [...new Set(itemIds.map(normalizeId))].filter(Boolean);
-  if (uniqueIds.length === 0)
+  // Keep original item IDs for GraphQL lookup; normalize only for cache/map keys.
+  const queryIds = [...new Set(itemIds.map((id) => id?.trim()).filter(Boolean))];
+  if (queryIds.length === 0)
     return {
       redirectMap: {},
       requiredKeysMap: {},
@@ -181,20 +182,22 @@ export async function getNavMetadata(params: {
       requiredRolesOperatorMap: {},
     };
 
-  const cacheKey = stableKey(language, uniqueIds, includeEntitlements);
+  const cacheKey = stableKey(language, queryIds, includeEntitlements);
   const now = Date.now();
 
-  const cached = metaCache.get(cacheKey);
-  if (cached && cached.expiresAt > now) {
-    if (debug) {
-      console.log('[NAV META][CACHE HIT]', {
-        traceId,
-        language,
-        includeEntitlements,
-        count: uniqueIds.length,
-      });
+  if (ENTITLEMENTS_CACHE_TTL_MS > 0) {
+    const cached = metaCache.get(cacheKey);
+    if (cached && cached.expiresAt > now) {
+      if (debug) {
+        console.log('[NAV META][CACHE HIT]', {
+          traceId,
+          language,
+          includeEntitlements,
+          count: queryIds.length,
+        });
+      }
+      return cached.value;
     }
-    return cached.value;
   }
 
   if (!hasGetData(client)) {
@@ -209,14 +212,14 @@ export async function getNavMetadata(params: {
   const requiredRolesMap: RequiredRolesMap = {};
   const requiredRolesOperatorMap: RequiredRolesOperatorMap = {};
 
-  const chunks = chunk(uniqueIds, CHUNK_SIZE);
+  const chunks = chunk(queryIds, CHUNK_SIZE);
 
   if (debug) {
     console.log('[NAV META][START]', {
       traceId,
       language,
       includeEntitlements,
-      totalIds: uniqueIds.length,
+        totalIds: queryIds.length,
       chunks: chunks.length,
       chunkSize: CHUNK_SIZE,
     });
@@ -231,7 +234,15 @@ export async function getNavMetadata(params: {
 
     for (let i = 0; i < idsChunk.length; i++) {
       const node = raw[`i${i}`];
-      if (!isObject(node)) continue;
+      if (!isObject(node)) {
+        if (debug) {
+          console.warn('[NAV META][MISS]', {
+            traceId,
+            queryId: idsChunk[i],
+          });
+        }
+        continue;
+      }
 
       const gqlId = asString(node.id) || idsChunk[i];
       const idKey = normalizeId(gqlId);
@@ -277,7 +288,9 @@ export async function getNavMetadata(params: {
     requiredRolesMap,
     requiredRolesOperatorMap,
   };
-  metaCache.set(cacheKey, { value, expiresAt: now + ENTITLEMENTS_CACHE_TTL_MS });
+  if (ENTITLEMENTS_CACHE_TTL_MS > 0) {
+    metaCache.set(cacheKey, { value, expiresAt: now + ENTITLEMENTS_CACHE_TTL_MS });
+  }
 
   if (debug) {
     const secured = Object.entries(requiredKeysMap).filter(([, v]) => v.length > 0);

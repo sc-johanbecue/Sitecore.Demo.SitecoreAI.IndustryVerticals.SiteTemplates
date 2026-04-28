@@ -1,5 +1,10 @@
 // lib/nav-apply.ts
-import { getOrSetAccessDecision, type EntitlementOperator } from 'lib/entitlements';
+import {
+  getOrSetAccessDecision,
+  userHasRequiredKeys,
+  userHasRequiredRoles,
+  type EntitlementOperator,
+} from 'lib/entitlements';
 
 export type NavItem = {
   Id: string;
@@ -159,6 +164,8 @@ export function filterNavTree(params: {
     const operator = it.__requiredAuth0Operator ?? 'any';
     const requiredRoles = it.__requiredRoles ?? [];
     const rolesOperator = it.__requiredRolesOperator ?? 'any';
+    const entitlementsPass = userHasRequiredKeys(required, userEntitlements, operator);
+    const rolesPass = userHasRequiredRoles(requiredRoles, userRoles, rolesOperator);
     const allowed = getOrSetAccessDecision(
       it.Id,
       language,
@@ -177,7 +184,18 @@ export function filterNavTree(params: {
           traceId,
           id: it.Id,
           idKey: normalizeId(it.Id),
-          required,
+          requiredEntitlements: required,
+          entitlementOperator: operator,
+          requiredRoles,
+          rolesOperator,
+          entitlementsPass,
+          rolesPass,
+          deniedBecause:
+            !entitlementsPass && !rolesPass
+              ? 'entitlements_and_roles'
+              : !entitlementsPass
+                ? 'entitlements'
+                : 'roles',
         });
       }
       return null;

@@ -27,7 +27,7 @@ function findNavigationRendering(layout: unknown): RenderingLike | null {
         if (isObject(entry)) {
           const r = entry as RenderingLike;
           const name = r.componentName ?? r.name;
-          if (name === 'Navigation') return r;
+          if (name === 'Navigation' || name === 'MalvernNavigation') return r;
 
           const deep = walk(r.placeholders);
           if (deep) return deep;
