@@ -1,6 +1,7 @@
 'use client';
 
 import React, { type JSX, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   TextField,
   Text,
@@ -10,6 +11,7 @@ import {
   Image as SitecoreImage,
   Placeholder,
 } from '@sitecore-content-sdk/nextjs';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { ComponentProps } from '@/lib/component-props';
 import { Menu, X, Search, ChevronDown } from 'lucide-react';
 
@@ -17,6 +19,7 @@ import { Menu, X, Search, ChevronDown } from 'lucide-react';
  * MalvernHeaderSection
  * Desktop: dark utility bar (language + links, Login / Register) + white main row (logo, main nav placeholder, search).
  * Mobile: white bar with logo + menu; full-screen teal overlay with main placeholder, utility links, search.
+ * Login uses Auth0 (`/api/auth/login`); Register stays the Sitecore general link.
  */
 
 interface Fields {
@@ -71,6 +74,106 @@ export type MalvernHeaderSectionProps = ComponentProps & {
   fields: Fields;
 };
 
+const loginButtonDesktop =
+  'inline-flex items-center justify-center rounded-md bg-[#2ec4d6] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#26b0c2]';
+const registerButtonDesktop =
+  'inline-flex items-center justify-center rounded-md border border-white px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10';
+const logoutButtonDesktop =
+  'inline-flex items-center justify-center rounded-md border border-white/40 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10';
+
+const loginButtonMobile =
+  'inline-flex w-full items-center justify-center rounded-md bg-[#2ec4d6] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#26b0c2]';
+const registerButtonMobile =
+  'inline-flex w-full items-center justify-center rounded-md border border-white px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10';
+const logoutButtonMobile =
+  'inline-flex w-full items-center justify-center rounded-md border border-white/40 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10';
+
+function MalvernHeaderAuthActions({
+  fields,
+  variant,
+}: {
+  fields: Fields;
+  variant: 'desktop' | 'mobile';
+}) {
+  const { user, isLoading } = useUser();
+  const router = useRouter();
+  const returnTo = encodeURIComponent(router.asPath || '/');
+  const loginHref = `/api/auth/login?returnTo=${returnTo}`;
+
+  const loginClass = variant === 'desktop' ? loginButtonDesktop : loginButtonMobile;
+  const registerClass = variant === 'desktop' ? registerButtonDesktop : registerButtonMobile;
+  const logoutClass = variant === 'desktop' ? logoutButtonDesktop : logoutButtonMobile;
+
+  if (isLoading) {
+    return (
+      <div
+        className={
+          variant === 'desktop' ? 'flex shrink-0 items-center gap-2' : 'flex w-full flex-col gap-2'
+        }
+        aria-busy="true"
+        aria-live="polite"
+      >
+        <span className={`${loginClass} cursor-wait opacity-70`}>
+          <Text tag="span" field={fields.LoginText} className="inline" />
+        </span>
+        <span className={`${registerClass} cursor-wait opacity-70`}>
+          <Text tag="span" field={fields.RegisterText} className="inline" />
+        </span>
+      </div>
+    );
+  }
+
+  if (user) {
+    const displayName =
+      typeof user.name === 'string' && user.name.trim()
+        ? user.name
+        : typeof user.email === 'string'
+          ? user.email
+          : ((fields.LoginText?.value as string | undefined) ?? 'Account');
+
+    return (
+      <div
+        className={
+          variant === 'desktop'
+            ? 'flex shrink-0 flex-wrap items-center justify-end gap-2'
+            : 'flex w-full flex-col gap-2'
+        }
+      >
+        <span
+          className={
+            variant === 'desktop'
+              ? 'max-w-40 truncate text-sm text-white/90 xl:max-w-56'
+              : 'truncate text-center text-sm text-white/90'
+          }
+          title={displayName}
+        >
+          {displayName}
+        </span>
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+        <a href="/api/auth/logout" className={logoutClass}>
+          Log out
+        </a>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={
+        variant === 'desktop' ? 'flex shrink-0 items-center gap-2' : 'flex w-full flex-col gap-2'
+      }
+    >
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+      <a href={loginHref} className={loginClass}>
+        <Text tag="span" field={fields.LoginText} className="inline" />
+      </a>
+      <SitecoreLink field={fields.RegisterLink} className={registerClass}>
+        <Text tag="span" field={fields.RegisterText} className="inline" />
+      </SitecoreLink>
+    </div>
+  );
+}
+
 export const Default = (props: MalvernHeaderSectionProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
   const { styles, DynamicPlaceholderId } = props.params;
@@ -123,26 +226,13 @@ export const Default = (props: MalvernHeaderSectionProps): JSX.Element => {
                 </SitecoreLink>
               ))}
             </div>
-            <div className="flex shrink-0 items-center gap-2">
-              <SitecoreLink
-                field={fields.LoginLink}
-                className="rounded-md bg-[#2ec4d6] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#26b0c2]"
-              >
-                <Text tag="span" field={fields.LoginText} className="inline" />
-              </SitecoreLink>
-              <SitecoreLink
-                field={fields.RegisterLink}
-                className="rounded-md border border-white px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10"
-              >
-                <Text tag="span" field={fields.RegisterText} className="inline" />
-              </SitecoreLink>
-            </div>
+            <MalvernHeaderAuthActions fields={fields} variant="desktop" />
           </div>
         </div>
 
         {/* Main bar */}
         <div className="border-b border-gray-100">
-          <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 lg:h-[4.25rem] lg:py-0">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 lg:h-17 lg:py-0">
             <SitecoreLink
               field={fields.LogoLink}
               className="flex min-w-0 shrink items-center gap-2.5 lg:gap-3"
@@ -196,7 +286,7 @@ export const Default = (props: MalvernHeaderSectionProps): JSX.Element => {
       {isMobileMenuOpen && (
         <div
           id="malvern-mobile-menu"
-          className="fixed inset-0 z-[100] flex flex-col bg-[#00333d] text-white lg:hidden"
+          className="fixed inset-0 z-100 flex flex-col bg-[#00333d] text-white lg:hidden"
           role="dialog"
           aria-modal="true"
           aria-label="Main navigation"
@@ -232,6 +322,9 @@ export const Default = (props: MalvernHeaderSectionProps): JSX.Element => {
                   <Text tag="span" field={u.text} className="inline" />
                 </SitecoreLink>
               ))}
+            </div>
+            <div className="mb-5">
+              <MalvernHeaderAuthActions fields={fields} variant="mobile" />
             </div>
             <div className="flex items-stretch overflow-hidden rounded-lg">
               <input

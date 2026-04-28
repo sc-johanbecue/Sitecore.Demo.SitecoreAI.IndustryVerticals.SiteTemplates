@@ -72,7 +72,7 @@ export const Default = (props: MalvernTabExplorerTabProps): JSX.Element => {
     return () => {
       ctx.unregisterTab(tabIndex);
     };
-  }, [ctx.registerTab, ctx.unregisterTab, tabIndex, labelFingerprint, fields.TabLabel]);
+  }, [ctx, ctx.registerTab, ctx.unregisterTab, tabIndex, labelFingerprint, fields.TabLabel]);
 
   const dph = DynamicPlaceholderId ?? '';
   const phCards = `malvern-tab-explorer-cards-${dph}`;
