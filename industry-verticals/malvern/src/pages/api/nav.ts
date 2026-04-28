@@ -35,15 +35,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       url: req.url,
       hasCookieHeader: Boolean(req.headers.cookie),
       hasAppSessionCookie:
-        typeof req.headers.cookie === 'string' &&
-        req.headers.cookie.includes('appSession='),
+        typeof req.headers.cookie === 'string' && req.headers.cookie.includes('appSession='),
       userAgent: (req.headers['user-agent'] || '').toString().slice(0, 120),
       referer: (req.headers.referer || '').toString().slice(0, 160),
     };
     const debug =
-      req.query.navdebug === '1' ||
-      req.query.debug === '1' ||
-      process.env.NAV_DEBUG === '1';
+      req.query.navdebug === '1' || req.query.debug === '1' || process.env.NAV_DEBUG === '1';
     if (debug) {
       console.log('[NAV API] request', requestInfo);
     }

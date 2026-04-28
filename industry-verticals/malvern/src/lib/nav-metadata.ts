@@ -219,7 +219,7 @@ export async function getNavMetadata(params: {
       traceId,
       language,
       includeEntitlements,
-        totalIds: queryIds.length,
+      totalIds: queryIds.length,
       chunks: chunks.length,
       chunkSize: CHUNK_SIZE,
     });
